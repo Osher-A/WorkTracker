@@ -1,0 +1,206 @@
+﻿<mahApps:MetroWindow x:Class="WorkTracker.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mahApps="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"          
+        xmlns:local="clr-namespace:WorkTracker.View"
+        xmlns:converters="clr-namespace:WorkTracker.View.Converters"
+        mc:Ignorable="d"
+        Title="Work Tracker" Height="650" Width="800">
+
+    <mahApps:MetroTabControl>
+        <mahApps:MetroTabControl.Resources>
+            <Style TargetType="mahApps:MetroTabControl" BasedOn="{StaticResource MahApps.Styles.TabControl.Animated}">
+                <Setter Property="FontSize" Value="13"/>
+                <Setter Property="FontFamily" Value="{StaticResource MahApps.Fonts.Family.Header}"/>
+                <Setter Property="mahApps:TabControlHelper.Transition" Value="Left"/>
+            </Style>
+            <converters:DateConverter x:Key="dateConvr"/>
+            <converters:FloatConverter x:Key="floatConvr"/>
+
+        </mahApps:MetroTabControl.Resources>
+        <TabItem Header="Add Work" IsTabStop="True" >
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.5*" />
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="350"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Row="1" Padding="30"  Grid.Column="1" Background="{StaticResource MahApps.Brushes.Accent4}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="150"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal">
+                            <DatePicker 
+                            Style="{StaticResource MahApps.Styles.DatePicker}"
+                            Height="50"
+                            FontSize="15"
+                                Width="230"
+                            VerticalContentAlignment="Center" 
+                            Text="{Binding NewWork.Date, Mode=OneWayToSource ,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource dateConvr}, ConverterCulture=en-GB}"/>
+                            <TextBox mahApps:TextBoxHelper.Watermark="Hours"
+                                     Width="50"
+                                     Margin="10,0"
+                                     Height="50"
+                                     VerticalContentAlignment="Center"
+                                     HorizontalContentAlignment="Center"
+                                     Text="{Binding NewWork.Hours, Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Converter={StaticResource floatConvr}, ConverterParameter=AddHours}"></TextBox>
+                        </StackPanel>
+
+                        <TextBox Grid.Row="2"
+                         Style="{StaticResource MahApps.Styles.TextBox}"
+                             mahApps:TextBoxHelper.Watermark="Description"
+                         FontSize="15" VerticalContentAlignment="Top"
+                         mahApps:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
+                         TextWrapping="Wrap"
+                         Text="{Binding NewWork.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Button Grid.Row="4"
+                        Height="45" 
+                        Style="{StaticResource MahApps.Styles.Button.Dialogs.Accent}" 
+                        Content="Submit" 
+                        Command="{Binding AddCommand}"/>
+                    </Grid>
+                </Border>
+
+            </Grid>
+
+        </TabItem>
+        <TabItem Header="View Work">
+            <Border >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Row="1"
+                            Grid.Column="1"
+                            Height="60px" Margin="10"
+                            BorderThickness="0"
+                            BorderBrush="{StaticResource MahApps.Brushes.Accent}"
+                            Background="{StaticResource MahApps.Brushes.Accent4}">
+                        <StackPanel HorizontalAlignment="Center"
+                                    VerticalAlignment="Center" Grid.Row="1"
+                                    Grid.Column="1" Orientation="Horizontal"
+                                    Height="40px" >
+                            <Label VerticalAlignment="Center"
+                                   Content="From:"/>
+                            <DatePicker 
+                                Margin="5,0,15,0" 
+                                VerticalContentAlignment="Center" 
+                                Width="200" BorderBrush="{StaticResource MahApps.Brushes.Accent}" 
+                                BorderThickness="1"
+                                SelectedDate="{Binding StartDate, Mode=OneWayToSource}"></DatePicker>
+                            <Label VerticalAlignment="Center" Content="To:"/>
+                            <DatePicker Margin="5,0,20,0" 
+                                        VerticalContentAlignment="Center" 
+                                        Width="200"
+                                        BorderBrush="{StaticResource MahApps.Brushes.Accent}"
+                                        SelectedDate="{Binding EndDate, Mode=OneWayToSource}">
+                            </DatePicker>
+                            <Button Style="{StaticResource MahApps.Styles.Button}"
+                                    Background="{StaticResource MahApps.Brushes.Accent4}"
+                                    Width="40" Content="{icons:MaterialDesign Kind=Search}"
+                                    Command="{Binding SearchCommand}"></Button>
+                        </StackPanel>
+                    </Border>
+                    <DataGrid Grid.Row="2"
+                              Grid.Column="1" 
+                              Padding="20" 
+                              GridLinesVisibility="Horizontal"
+                              CanUserAddRows="False"
+                              IsReadOnly="False"
+                              
+                              Style="{StaticResource MahApps.Styles.DataGrid}" 
+                              ItemsSource="{Binding Works}" 
+                              SelectedItem="{Binding SelectedWork, Mode=OneWayToSource}"
+                              AutoGenerateColumns="False"
+                              >
+
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridCell" BasedOn="{StaticResource MahApps.Styles.DataGridCell}">
+                            </Style>
+                            <Style TargetType="DataGrid" BasedOn="{StaticResource MahApps.Styles.DataGrid}">
+                            </Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource MahApps.Styles.Button.Dialogs.Accent}">
+                                <Setter Property="Width" Value="100"/>
+                                <Setter Property="Height" Value="30"/>
+                                <Setter Property="Background" Value="{StaticResource MahApps.Brushes.Accent4}"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="FontWeight" Value="Regular"/>
+                                <Setter Property="BorderThickness" Value="1"/>
+                                <Setter Property="Margin" Value="2"/>
+                            </Style>
+                        </DataGrid.Resources>
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Date" 
+                                                Binding="{Binding Date , StringFormat={} {0:dd/MM/yyyy}}"  />
+                            <DataGridTemplateColumn Header="Hours">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding Hours, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                   HorizontalAlignment="Center"
+                                                 BorderThickness="0"
+                                                 Padding="10"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                           </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Description">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                   MaxWidth="300"
+                                                   TextWrapping="WrapWithOverflow"
+                                                   HorizontalAlignment="Left"
+                                                 BorderThickness="0"
+                                                 Padding="10"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Delete"
+                                                Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}, Path=DataContext.DeleteCommand}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Update" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}, Path=DataContext.UpdateCommand}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+                </Grid>
+            </Border>
+
+        </TabItem>
+    </mahApps:MetroTabControl>
+
+</mahApps:MetroWindow>
