@@ -11,6 +11,6 @@ namespace WorkTracker.DTO
         public int Id { get; set; }
         public DateTime Date { get; set; }
         public float Hours { get; set; }
-        public string Description { get; set; } = string.Empty;
+        public string? Description { get; set; } 
     }
 }

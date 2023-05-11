@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using GlobalUtilities;
 using PropertyChanged;
 using System;
 using System.Collections.Generic;
@@ -24,6 +23,7 @@ namespace WorkTracker.ViewModel
         public ObservableCollection<WorkDTO> Works { get; set; } = new ObservableCollection<WorkDTO>();
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public float TotalHours { get; set; }
         public ICommand AddCommand { get; set; }
         public ICommand SearchCommand { get; set; }
         public ICommand UpdateCommand { get; set; }
@@ -75,13 +75,14 @@ namespace WorkTracker.ViewModel
         private async void Update(object obj)
         {
             await _workManager.UpdateWork(SelectedWork);
+            LoadData();
         }
 
         private bool CanUpdate(object obj)
         {
-            return NewWork.Date > new DateTime(2023, 05, 08)
-                && !string.IsNullOrWhiteSpace(NewWork.Description)
-                && NewWork.Hours > 0;
+            return SelectedWork?.Date > new DateTime(2023, 05, 08)
+                && !string.IsNullOrWhiteSpace(SelectedWork?.Description)
+                && SelectedWork?.Hours > 0;
         }
         private async void Delete(object obj)
         {
@@ -92,7 +93,7 @@ namespace WorkTracker.ViewModel
 
         private bool CanDelete(object obj)
         {
-            return true;
+            return SelectedWork != null;
         }
         private async void LoadData()
         {
@@ -100,6 +101,8 @@ namespace WorkTracker.ViewModel
                 .OrderBy(w => w.Date)
                 .ToList()
                 .ToObservableCollection();
+
+            TotalHours = Works.Sum(w => w.Hours);
         }
 
 

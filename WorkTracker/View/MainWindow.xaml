@@ -58,6 +58,7 @@
                                      VerticalContentAlignment="Center"
                                      HorizontalContentAlignment="Center"
                                      Text="{Binding NewWork.Hours, Mode=TwoWay,
+                                Delay=2000,
                                 UpdateSourceTrigger=PropertyChanged,
                                 Converter={StaticResource floatConvr}, ConverterParameter=AddHours}"></TextBox>
                         </StackPanel>
@@ -87,6 +88,7 @@
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -105,15 +107,15 @@
                                     Grid.Column="1" Orientation="Horizontal"
                                     Height="40px" >
                             <Label VerticalAlignment="Center"
-                                   Content="From:"/>
+                                   Content="Start date:"/>
                             <DatePicker 
-                                Margin="5,0,15,0" 
+                                Margin="3,0,25,0" 
                                 VerticalContentAlignment="Center" 
                                 Width="200" BorderBrush="{StaticResource MahApps.Brushes.Accent}" 
                                 BorderThickness="1"
                                 SelectedDate="{Binding StartDate, Mode=OneWayToSource}"></DatePicker>
-                            <Label VerticalAlignment="Center" Content="To:"/>
-                            <DatePicker Margin="5,0,20,0" 
+                            <Label VerticalAlignment="Center" Content="End date:"/>
+                            <DatePicker Margin="3,0,20,0" 
                                         VerticalContentAlignment="Center" 
                                         Width="200"
                                         BorderBrush="{StaticResource MahApps.Brushes.Accent}"
@@ -131,18 +133,15 @@
                               GridLinesVisibility="Horizontal"
                               CanUserAddRows="False"
                               IsReadOnly="False"
-                              
-                              Style="{StaticResource MahApps.Styles.DataGrid}" 
+                              Style="{StaticResource MahApps.Styles.DataGrid.Azure}" 
                               ItemsSource="{Binding Works}" 
                               SelectedItem="{Binding SelectedWork, Mode=OneWayToSource}"
                               AutoGenerateColumns="False"
                               >
 
                         <DataGrid.Resources>
-                            <Style TargetType="DataGridCell" BasedOn="{StaticResource MahApps.Styles.DataGridCell}">
-                            </Style>
-                            <Style TargetType="DataGrid" BasedOn="{StaticResource MahApps.Styles.DataGrid}">
-                            </Style>
+                            
+                           
                             <Style TargetType="Button" BasedOn="{StaticResource MahApps.Styles.Button.Dialogs.Accent}">
                                 <Setter Property="Width" Value="100"/>
                                 <Setter Property="Height" Value="30"/>
@@ -158,15 +157,15 @@
                             <DataGridTextColumn Header="Date" 
                                                 Binding="{Binding Date , StringFormat={} {0:dd/MM/yyyy}}"  />
                             <DataGridTemplateColumn Header="Hours">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBox Text="{Binding Hours, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding Hours, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=2000, Converter={StaticResource floatConvr}}"
                                                    HorizontalAlignment="Center"
                                                  BorderThickness="0"
                                                  Padding="10"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                           </DataGridTemplateColumn>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                             <DataGridTemplateColumn Header="Description">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -197,6 +196,12 @@
                         </DataGrid.Columns>
 
                     </DataGrid>
+                    <TextBlock HorizontalAlignment="Right"
+                               Grid.Row="3"
+                               Grid.Column="1"
+                               Padding="20, 0"
+                               FontSize="15"
+                               Text="{Binding TotalHours,  StringFormat= Total Hours: {0}}"/>
                 </Grid>
             </Border>
 
