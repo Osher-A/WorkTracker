@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:WorkTracker.View"
         xmlns:converters="clr-namespace:WorkTracker.View.Converters"
         mc:Ignorable="d"
-        Title="Work Tracker" Height="650" Width="800">
+        Title="Work Tracker"  Width="800" Height="600" ResizeMode="CanResizeWithGrip">
 
     <mahApps:MetroTabControl>
         <mahApps:MetroTabControl.Resources>
@@ -34,7 +34,7 @@
                     <ColumnDefinition Width="350"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Border Grid.Row="1" Padding="30"  Grid.Column="1" Background="{StaticResource MahApps.Brushes.Accent4}">
+                <Border Grid.Row="1" Padding="30" Grid.Column="1" Background="{StaticResource MahApps.Brushes.Accent4}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="50"/>
@@ -58,7 +58,7 @@
                                      VerticalContentAlignment="Center"
                                      HorizontalContentAlignment="Center"
                                      Text="{Binding NewWork.Hours, Mode=TwoWay,
-                                Delay=2000,
+                                Delay=1000,
                                 UpdateSourceTrigger=PropertyChanged,
                                 Converter={StaticResource floatConvr}, ConverterParameter=AddHours}"></TextBox>
                         </StackPanel>
@@ -85,7 +85,7 @@
             <Border >
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="10"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -98,7 +98,7 @@
                     </Grid.ColumnDefinitions>
                     <Border Grid.Row="1"
                             Grid.Column="1"
-                            Height="60px" Margin="10"
+                            Height="60px" Margin="30"
                             BorderThickness="0"
                             BorderBrush="{StaticResource MahApps.Brushes.Accent}"
                             Background="{StaticResource MahApps.Brushes.Accent4}">
@@ -127,75 +127,80 @@
                                     Command="{Binding SearchCommand}"></Button>
                         </StackPanel>
                     </Border>
-                    <DataGrid Grid.Row="2"
-                              Grid.Column="1" 
+                    <ScrollViewer Grid.Row="2"
+                                  Grid.Column="1"
+                                  VerticalScrollBarVisibility="Auto"
+                                  Style="{StaticResource MahApps.Styles.ScrollViewer.GridView}">
+                        <DataGrid 
                               Padding="20" 
                               GridLinesVisibility="Horizontal"
                               CanUserAddRows="False"
+                              CanUserResizeColumns="False"
                               IsReadOnly="False"
                               Style="{StaticResource MahApps.Styles.DataGrid.Azure}" 
                               ItemsSource="{Binding Works}" 
                               SelectedItem="{Binding SelectedWork, Mode=OneWayToSource}"
                               AutoGenerateColumns="False"
-                              >
+                              MaxHeight="880">
 
-                        <DataGrid.Resources>
-                            
-                           
-                            <Style TargetType="Button" BasedOn="{StaticResource MahApps.Styles.Button.Dialogs.Accent}">
-                                <Setter Property="Width" Value="100"/>
-                                <Setter Property="Height" Value="30"/>
-                                <Setter Property="Background" Value="{StaticResource MahApps.Brushes.Accent4}"/>
-                                <Setter Property="Foreground" Value="Black"/>
-                                <Setter Property="FontWeight" Value="Regular"/>
-                                <Setter Property="BorderThickness" Value="1"/>
-                                <Setter Property="Margin" Value="2"/>
-                            </Style>
-                        </DataGrid.Resources>
+                            <DataGrid.Resources>
 
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Date" 
+
+                                <Style TargetType="Button" BasedOn="{StaticResource MahApps.Styles.Button.Dialogs.Accent}">
+                                    <Setter Property="Width" Value="100"/>
+                                    <Setter Property="Height" Value="30"/>
+                                    <Setter Property="Background" Value="{StaticResource MahApps.Brushes.Accent4}"/>
+                                    <Setter Property="Foreground" Value="Black"/>
+                                    <Setter Property="FontWeight" Value="Regular"/>
+                                    <Setter Property="BorderThickness" Value="1"/>
+                                    <Setter Property="Margin" Value="2"/>
+                                </Style>
+                            </DataGrid.Resources>
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Date" 
                                                 Binding="{Binding Date , StringFormat={} {0:dd/MM/yyyy}}"  />
-                            <DataGridTemplateColumn Header="Hours">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBox Text="{Binding Hours, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=2000, Converter={StaticResource floatConvr}}"
+                                <DataGridTemplateColumn Header="Hours">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding Hours, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=2000, Converter={StaticResource floatConvr}}"
                                                    HorizontalAlignment="Center"
                                                  BorderThickness="0"
                                                  Padding="10"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Description">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBox Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Description">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                    MaxWidth="300"
                                                    TextWrapping="WrapWithOverflow"
                                                    HorizontalAlignment="Left"
                                                  BorderThickness="0"
                                                  Padding="10"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn>
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button Content="Delete"
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="Delete"
                                                 Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}, Path=DataContext.DeleteCommand}" />
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn>
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button Content="Update" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}, Path=DataContext.UpdateCommand}" />
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="Update" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}, Path=DataContext.UpdateCommand}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </ScrollViewer>
 
-                    </DataGrid>
                     <TextBlock HorizontalAlignment="Right"
                                Grid.Row="3"
                                Grid.Column="1"

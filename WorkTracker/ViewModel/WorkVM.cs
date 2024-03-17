@@ -34,7 +34,7 @@ namespace WorkTracker.ViewModel
         {
             _workManager = new WorkManager(mapper, workRepository);
 
-            StartDate = DateTime.Now.AddMonths(-3);
+            StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             EndDate = DateTime.Now;
             AddCommand = new CustomCommand(Add, CanAdd);
             SearchCommand = new CustomCommand(Search, CanSearch);
@@ -54,6 +54,7 @@ namespace WorkTracker.ViewModel
         private bool CanAdd(object obj)
         {
             var validated = NewWork.Date > new DateTime(2023, 05, 08)
+                && NewWork.Date <= DateTime.Now
                 && !string.IsNullOrWhiteSpace(NewWork.Description)
                 && NewWork.Hours > 0;
             return validated;
