@@ -1,25 +1,23 @@
-﻿using AutoMapper;
-using PropertyChanged;
+﻿using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using WorkTracker.DAL;
-using WorkTracker.Domain;
+using WorkTracker.BusinessLogic;
+using WorkTracker.Data.DAL;
 using WorkTracker.DTO;
-using WorkTracker.Utilities;
+using WorkTracker.WPF.Utilities;
 
-namespace WorkTracker.ViewModel
+namespace WorkTracker.WPF.ViewModel
 {
     [AddINotifyPropertyChangedInterface]
     public partial class WorkVM
     {
-        private WorkManager _workManager;
-        public WorkDTO NewWork { get; set; } = new();
-        public WorkDTO SelectedWork { get; set; } = new();
+        private WorkBusinessLogic _workBusinessLogic;
+        public WorkDTO NewWork { get; set; } = new WorkDTO { WorkDetails = new List<WorkDetailsDTO> { new WorkDetailsDTO() } };
+        public WorkDTO SelectedWork { get; set; } = new WorkDTO { WorkDetails = new List<WorkDetailsDTO> { new WorkDetailsDTO() } };
         public ObservableCollection<WorkDTO> Works { get; set; } = new ObservableCollection<WorkDTO>();
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
@@ -32,7 +30,7 @@ namespace WorkTracker.ViewModel
 
         public WorkVM(AutoMapper.IMapper mapper, IWorkRepository workRepository)
         {
-            _workManager = new WorkManager(mapper, workRepository);
+            _workBusinessLogic = new WorkBusinessLogic(mapper, workRepository);
 
             StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             EndDate = DateTime.Now;
@@ -46,7 +44,7 @@ namespace WorkTracker.ViewModel
 
         private async void Add(object obj)
         {
-            await _workManager.AddWork(NewWork);
+            await _workBusinessLogic.AddWork(NewWork);
             NewWork = new();
             LoadData();
         }
@@ -55,8 +53,9 @@ namespace WorkTracker.ViewModel
         {
             var validated = NewWork.Date > new DateTime(2023, 05, 08)
                 && NewWork.Date <= DateTime.Now
-                && !string.IsNullOrWhiteSpace(NewWork.Description)
-                && NewWork.Hours > 0;
+                && !string.IsNullOrWhiteSpace(NewWork.WorkDetails.FirstOrDefault()?.Description)
+                && NewWork.WorkDetails.FirstOrDefault()?.Hours > 0;
+
             return validated;
         }
 
@@ -75,20 +74,20 @@ namespace WorkTracker.ViewModel
 
         private async void Update(object obj)
         {
-            await _workManager.UpdateWork(SelectedWork);
+            await _workBusinessLogic.UpdateWork(SelectedWork);
             LoadData();
         }
 
         private bool CanUpdate(object obj)
         {
             return SelectedWork?.Date > new DateTime(2023, 05, 08)
-                && !string.IsNullOrWhiteSpace(SelectedWork?.Description)
-                && SelectedWork?.Hours > 0;
+                && !string.IsNullOrWhiteSpace(SelectedWork?.WorkDetails?.FirstOrDefault()?.Description)
+                && SelectedWork?.WorkDetails?.FirstOrDefault()?.Hours > 0;
         }
         private async void Delete(object obj)
         {
             if (await ConfirmDeletion?.Invoke("Warning", "Are you sure you want to delete this entry?")! == true)
-                await _workManager.DeleteWork(SelectedWork.Id);
+                await _workBusinessLogic.DeleteWork(SelectedWork.Id);
             LoadData();
         }
 
@@ -98,15 +97,12 @@ namespace WorkTracker.ViewModel
         }
         private async void LoadData()
         {
-            Works = (await _workManager.GetWorks(StartDate, EndDate))
+            Works = (await _workBusinessLogic.GetWorks(StartDate, EndDate))
                 .OrderBy(w => w.Date)
                 .ToList()
                 .ToObservableCollection();
 
-            TotalHours = Works.Sum(w => w.Hours);
+            TotalHours = Works.Sum(w => w.WorkDetails.Sum(wd => wd.Hours));
         }
-
-
-
     }
 }

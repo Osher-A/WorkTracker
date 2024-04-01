@@ -3,7 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTracker", "WorkTracker\WorkTracker.csproj", "{DE161FD4-0C44-45FF-830A-17152B943520}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{3678F78F-CCDA-4342-AE45-9F8490A2B45F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkTracker.WPF", "WorkTracker\WorkTracker.WPF.csproj", "{93D966D4-DC5D-469D-A59A-31823FF5E1B6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{4EC23152-F3A7-46FF-9B0C-C01604143DD5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DTO", "DTO", "{E94EAB7E-F215-41FC-88DE-1535A72E0F58}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BusinessLogic", "BusinessLogic", "{13F331C5-BEAF-4E4E-8C77-87806DA85622}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTracker.BusinessLogic", "WorkTracker.BusinessLogic\WorkTracker.BusinessLogic.csproj", "{29E1C81D-01B8-4A49-8271-501F58855F7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTracker.DTO", "WorkTracker.DTO\WorkTracker.DTO.csproj", "{244F71BE-077E-43B3-8F73-27901239C6FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTracker.Data", "WorkTracker.Data\WorkTracker.Data.csproj", "{52500A3C-85EC-49B7-91EA-3B49DA2D5832}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,13 +25,31 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DE161FD4-0C44-45FF-830A-17152B943520}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DE161FD4-0C44-45FF-830A-17152B943520}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DE161FD4-0C44-45FF-830A-17152B943520}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DE161FD4-0C44-45FF-830A-17152B943520}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93D966D4-DC5D-469D-A59A-31823FF5E1B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93D966D4-DC5D-469D-A59A-31823FF5E1B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93D966D4-DC5D-469D-A59A-31823FF5E1B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93D966D4-DC5D-469D-A59A-31823FF5E1B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29E1C81D-01B8-4A49-8271-501F58855F7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29E1C81D-01B8-4A49-8271-501F58855F7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29E1C81D-01B8-4A49-8271-501F58855F7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29E1C81D-01B8-4A49-8271-501F58855F7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{244F71BE-077E-43B3-8F73-27901239C6FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{244F71BE-077E-43B3-8F73-27901239C6FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{244F71BE-077E-43B3-8F73-27901239C6FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{244F71BE-077E-43B3-8F73-27901239C6FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52500A3C-85EC-49B7-91EA-3B49DA2D5832}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52500A3C-85EC-49B7-91EA-3B49DA2D5832}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52500A3C-85EC-49B7-91EA-3B49DA2D5832}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52500A3C-85EC-49B7-91EA-3B49DA2D5832}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{93D966D4-DC5D-469D-A59A-31823FF5E1B6} = {3678F78F-CCDA-4342-AE45-9F8490A2B45F}
+		{29E1C81D-01B8-4A49-8271-501F58855F7D} = {13F331C5-BEAF-4E4E-8C77-87806DA85622}
+		{244F71BE-077E-43B3-8F73-27901239C6FA} = {E94EAB7E-F215-41FC-88DE-1535A72E0F58}
+		{52500A3C-85EC-49B7-91EA-3B49DA2D5832} = {4EC23152-F3A7-46FF-9B0C-C01604143DD5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {27A33101-61BE-4EAA-A4BF-008A04F0D66F}

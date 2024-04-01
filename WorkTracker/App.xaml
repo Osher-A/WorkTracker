@@ -1,8 +1,8 @@
-﻿<Application x:Class="WorkTracker.App"
+﻿<Application x:Class="WorkTracker.WPF.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mahApps="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:local="clr-namespace:WorkTracker"
+             xmlns:local="clr-namespace:WorkTracker.WPF"
              Startup="OnStartUp">
     <Application.Resources>
         <ResourceDictionary>

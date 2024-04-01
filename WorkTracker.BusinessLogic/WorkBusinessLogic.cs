@@ -1,20 +1,15 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WorkTracker.DAL;
+using WorkTracker.Data.DAL;
+using WorkTracker.Data.Model;
 using WorkTracker.DTO;
-using WorkTracker.Model;
 
-namespace WorkTracker.Domain
+namespace WorkTracker.BusinessLogic
 {
-    public sealed class WorkManager
+    public sealed class WorkBusinessLogic
     {
         private IMapper _mapper;
         private IWorkRepository _workRepo;
-        public WorkManager(IMapper mapper, IWorkRepository workRepository)
+        public WorkBusinessLogic(IMapper mapper, IWorkRepository workRepository)
         {
             _mapper = mapper;
             _workRepo = workRepository;

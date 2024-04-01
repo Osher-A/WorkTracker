@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WorkTracker.Model;
+using WorkTracker.Data.Model;
 
-namespace WorkTracker.DAL
+namespace WorkTracker.Data.DAL
 {
     public interface IWorkRepository
     {

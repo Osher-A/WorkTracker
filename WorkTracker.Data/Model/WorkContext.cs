@@ -7,16 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WorkTracker.Model
+namespace WorkTracker.Data.Model
 {
     public sealed class WorkContext : DbContext
     {
+        public WorkContext(DbContextOptions dbContextOptions)
+            : base(dbContextOptions)
+        {
+        }
+
         public DbSet<Work> Works { get; set; }
+
+        public DbSet<WorkDetails> WorksDetails { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["WorkDb"].ConnectionString)
-               .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking).EnableSensitiveDataLogging(); ;
+            //optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["WorkDb"].ConnectionString)
+            //   .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking).EnableSensitiveDataLogging(); 
             // optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS; Database = IWagesManager; Trusted_Connection = True;Integrated Security=True; MultipleActiveResultSets = true;Encrypt=True; TrustServerCertificate=True;")
         }
 

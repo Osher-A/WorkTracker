@@ -6,13 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace WorkTracker.View.Converters
+namespace WorkTracker.WPF.View.Converters
 {
     public class FloatConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((float)(value) == 0f && (string)parameter == "AddHours")
+            if ((float)value == 0f && (string)parameter == "AddHours")
                 return "";
             else
                 return value;

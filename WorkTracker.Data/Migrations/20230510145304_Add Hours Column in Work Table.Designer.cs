@@ -5,15 +5,16 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WorkTracker.Model;
+using WorkTracker.Data.Model;
+
 
 #nullable disable
 
 namespace WorkTracker.Migrations
 {
     [DbContext(typeof(WorkContext))]
-    [Migration("20230507163738_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20230510145304_Add Hours Column in Work Table")]
+    partial class AddHoursColumninWorkTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,9 +37,12 @@ namespace WorkTracker.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Task")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Hours")
+                        .HasColumnType("real");
 
                     b.HasKey("Id");
 

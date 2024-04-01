@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace WorkTracker.Utilities
+namespace WorkTracker.WPF.Utilities
 {
     public class CustomCommand : ICommand
     {

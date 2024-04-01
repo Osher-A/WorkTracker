@@ -1,13 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WorkTracker.DTO;
-using WorkTracker.Model;
+using WorkTracker.Data.Model;
 
-namespace WorkTracker.DAL
+namespace WorkTracker.Data.DAL
 {
     public sealed class WorkRepository : IWorkRepository
     {
@@ -37,7 +31,10 @@ namespace WorkTracker.DAL
 
         public async Task<ICollection<Work>> GetWorks(DateTime From, DateTime To)
         {
-            return await _db.Works.Where(w => w.Date >= From && w.Date <= To).ToListAsync();
+            return await _db.Works
+                .Include(x => x.WorkDetails)
+                .Where(w => w.Date >= From && w.Date <= To)
+                .ToListAsync();
         }
 
         public async Task UpdateWork(Work work)

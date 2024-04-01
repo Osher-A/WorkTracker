@@ -1,12 +1,12 @@
-﻿<mahApps:MetroWindow x:Class="WorkTracker.View.MainWindow"
+﻿<mahApps:MetroWindow x:Class="WorkTracker.WPF.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mahApps="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"          
-        xmlns:local="clr-namespace:WorkTracker.View"
-        xmlns:converters="clr-namespace:WorkTracker.View.Converters"
+        xmlns:local="clr-namespace:WorkTracker.WPF.View"
+        xmlns:converters="clr-namespace:WorkTracker.WPF.View.Converters"
         mc:Ignorable="d"
         Title="Work Tracker"  Width="800" Height="600" ResizeMode="CanResizeWithGrip">
 
@@ -57,7 +57,7 @@
                                      Height="50"
                                      VerticalContentAlignment="Center"
                                      HorizontalContentAlignment="Center"
-                                     Text="{Binding NewWork.Hours, Mode=TwoWay,
+                                     Text="{Binding NewWork.WorkDetails[0].Hours, Mode=TwoWay,
                                 Delay=1000,
                                 UpdateSourceTrigger=PropertyChanged,
                                 Converter={StaticResource floatConvr}, ConverterParameter=AddHours}"></TextBox>
@@ -69,7 +69,7 @@
                          FontSize="15" VerticalContentAlignment="Top"
                          mahApps:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
                          TextWrapping="Wrap"
-                         Text="{Binding NewWork.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                         Text="{Binding NewWork.WorkDetails[0].Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <Button Grid.Row="4"
                         Height="45" 
                         Style="{StaticResource MahApps.Styles.Button.Dialogs.Accent}" 
@@ -163,7 +163,7 @@
                                 <DataGridTemplateColumn Header="Hours">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBox Text="{Binding Hours, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=2000, Converter={StaticResource floatConvr}}"
+                                            <TextBox Text="{Binding WorkDetails[0].Hours, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=2000, Converter={StaticResource floatConvr}}"
                                                    HorizontalAlignment="Center"
                                                  BorderThickness="0"
                                                  Padding="10"/>
@@ -173,7 +173,7 @@
                                 <DataGridTemplateColumn Header="Description">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBox Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            <TextBox Text="{Binding WorkDetails[0].Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                    MaxWidth="300"
                                                    TextWrapping="WrapWithOverflow"
                                                    HorizontalAlignment="Left"

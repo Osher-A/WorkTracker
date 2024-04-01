@@ -1,18 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using WorkTracker.Model;
 using AutoMapper;
-using WorkTracker.DAL;
-using WorkTracker.View;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using WorkTracker.BusinessLogic;
+using WorkTracker.Data.DAL;
+using WorkTracker.Data.Model;
 
-namespace WorkTracker
+namespace WorkTracker.WPF
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -42,8 +38,15 @@ namespace WorkTracker
 
         private void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<WorkContext>(ServiceLifetime.Transient);
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            // Retrieve the connection string from the configuration file
+            string connectionString = ConfigurationManager.ConnectionStrings["WorkDb"].ConnectionString;
+
+            services.AddDbContext<WorkContext>(options =>
+            {
+                options.UseSqlServer(connectionString);
+            }, ServiceLifetime.Transient);
+
+            services.AddAutoMapper(typeof(BusinessLogic.Mapper).Assembly);
             services.AddScoped<IWorkRepository, WorkRepository>();
             services.AddSingleton<View.MainWindow>();
         }

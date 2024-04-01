@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace WorkTracker.View.Converters
+namespace WorkTracker.WPF.View.Converters
 {
     public class DateConverter : IValueConverter
     {

@@ -5,15 +5,16 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WorkTracker.Model;
+using WorkTracker.Data.Model;
+
 
 #nullable disable
 
 namespace WorkTracker.Migrations
 {
     [DbContext(typeof(WorkContext))]
-    [Migration("20230510145304_Add Hours Column in Work Table")]
-    partial class AddHoursColumninWorkTable
+    [Migration("20240317230233_AddWorkDetailsTable")]
+    partial class AddWorkDetailsTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,6 +37,23 @@ namespace WorkTracker.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.HasKey("Id");
+
+                    b.ToTable("Works");
+                });
+
+            modelBuilder.Entity("WorkTracker.Model.WorkDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClientName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -43,9 +61,26 @@ namespace WorkTracker.Migrations
                     b.Property<float>("Hours")
                         .HasColumnType("real");
 
+                    b.Property<int?>("WorkId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Works");
+                    b.HasIndex("WorkId");
+
+                    b.ToTable("WorksDetails");
+                });
+
+            modelBuilder.Entity("WorkTracker.Model.WorkDetails", b =>
+                {
+                    b.HasOne("WorkTracker.Model.Work", null)
+                        .WithMany("WorkDetails")
+                        .HasForeignKey("WorkId");
+                });
+
+            modelBuilder.Entity("WorkTracker.Model.Work", b =>
+                {
+                    b.Navigation("WorkDetails");
                 });
 #pragma warning restore 612, 618
         }

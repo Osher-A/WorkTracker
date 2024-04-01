@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace WorkTracker.Utilities
+namespace WorkTracker.WPF.Utilities
 {
     public static class ObservableCollectionConverter
     {

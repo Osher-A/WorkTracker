@@ -1,19 +1,16 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using WorkTracker.Data.Model;
 using WorkTracker.DTO;
-using WorkTracker.Model;
 
-namespace WorkTracker.Utilities
+namespace WorkTracker.BusinessLogic
 {
     public class Mapper : Profile
     {
         public Mapper()
         {
             CreateMap<WorkDTO, Work>().ReverseMap();
+
+            CreateMap<WorkDetailsDTO, WorkDetails>().ReverseMap();
         }
     }
 }

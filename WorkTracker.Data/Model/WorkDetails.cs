@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WorkTracker.DTO
+namespace WorkTracker.Data.Model
 {
-    public sealed class WorkDTO
+    public class WorkDetails
     {
         public int Id { get; set; }
-        public DateTime Date { get; set; }
+        public string Description { get; set; }
         public float Hours { get; set; }
-        public string? Description { get; set; } 
+        public string? ClientName { get; set; }
     }
 }

@@ -2,14 +2,14 @@
 
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>net7.0-windows</TargetFramework>
+		<TargetFramework>net8.0-windows</TargetFramework>
 		<Nullable>enable</Nullable>
 		<UseWPF>true</UseWPF>
 		<ApplicationIcon>desk_icon-icons.com_54432.ico</ApplicationIcon>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Content Include="desk_icon-icons.com_54432.ico" />
+		<Content Include="desk_icon-icons.com_54432.ico" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -29,10 +29,16 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
+		<PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<Page Include="App.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\WorkTracker.BusinessLogic\WorkTracker.BusinessLogic.csproj" />
+		<ProjectReference Include="..\WorkTracker.DTO\WorkTracker.DTO.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
