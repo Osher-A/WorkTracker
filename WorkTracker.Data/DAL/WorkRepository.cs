@@ -3,13 +3,9 @@ using WorkTracker.Data.Model;
 
 namespace WorkTracker.Data.DAL
 {
-    public sealed class WorkRepository : IWorkRepository
+    public sealed class WorkRepository(WorkContext db) : IWorkRepository
     {
-        private WorkContext _db;
-        public WorkRepository(WorkContext db)
-        {
-            _db = db;
-        }
+        private readonly WorkContext _db = db;
 
         public async Task AddWork(Work work)
         {

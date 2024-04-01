@@ -15,10 +15,10 @@ namespace WorkTracker.WPF.ViewModel
     [AddINotifyPropertyChangedInterface]
     public partial class WorkVM
     {
-        private WorkBusinessLogic _workBusinessLogic;
-        public WorkDTO NewWork { get; set; } = new WorkDTO { WorkDetails = new List<WorkDetailsDTO> { new WorkDetailsDTO() } };
-        public WorkDTO SelectedWork { get; set; } = new WorkDTO { WorkDetails = new List<WorkDetailsDTO> { new WorkDetailsDTO() } };
-        public ObservableCollection<WorkDTO> Works { get; set; } = new ObservableCollection<WorkDTO>();
+        private readonly WorkBusinessLogic _workBusinessLogic;
+        public WorkDTO NewWork { get; set; } = new WorkDTO { WorkDetails = [new WorkDetailsDTO()] };
+        public WorkDTO SelectedWork { get; set; } = new WorkDTO { WorkDetails = [new WorkDetailsDTO()] };
+        public ObservableCollection<WorkDTO> Works { get; set; } = [];
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public float TotalHours { get; set; }

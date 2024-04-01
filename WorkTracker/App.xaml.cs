@@ -23,11 +23,9 @@ namespace WorkTracker.WPF
             _serviceProvider = serviceCollection.BuildServiceProvider();
 
             // To add all migrations if they do not exist like when moving to another machine
-            using (var scope = _serviceProvider.CreateScope())
-            using (var context = scope.ServiceProvider.GetService<WorkContext>())
-            {
-                context?.Database.Migrate();
-            }
+            using var scope = _serviceProvider.CreateScope();
+            using var context = scope.ServiceProvider.GetService<WorkContext>();
+            context?.Database.Migrate();
         }
         private void OnStartUp(object sender, StartupEventArgs e)
         {
@@ -36,7 +34,7 @@ namespace WorkTracker.WPF
 
         }
 
-        private void ConfigureServices(IServiceCollection services)
+        private static void ConfigureServices(IServiceCollection services)
         {
             // Retrieve the connection string from the configuration file
             string connectionString = ConfigurationManager.ConnectionStrings["WorkDb"].ConnectionString;

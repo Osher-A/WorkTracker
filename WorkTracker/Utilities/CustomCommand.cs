@@ -9,10 +9,10 @@ namespace WorkTracker.WPF.Utilities
 {
     public class CustomCommand : ICommand
     {
-        private Action<object> execute;
-        private Predicate<object> canExecute;
-        private object canSelecteEvent;
-        private ICommand selectedEventCommand;
+        private readonly Action<object> execute;
+        private readonly Predicate<object> canExecute;
+        private readonly object canSelecteEvent;
+        private readonly ICommand selectedEventCommand;
 
         public CustomCommand(Action<object> execute, Predicate<object> canExecute)
         {
@@ -34,7 +34,7 @@ namespace WorkTracker.WPF.Utilities
 
         public bool CanExecute(object parameter)
         {
-            bool b = canExecute == null ? true : canExecute(parameter);
+            bool b = canExecute == null || canExecute(parameter);
             return b;
         }
 

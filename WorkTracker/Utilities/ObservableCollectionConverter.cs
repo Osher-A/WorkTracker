@@ -7,9 +7,7 @@ namespace WorkTracker.WPF.Utilities
     {
         public static ObservableCollection<T> ToObservableCollection<T>(this ICollection<T> list)
         {
-            ObservableCollection<T> collection = new();
-            foreach (var item in list)
-                collection.Add(item);
+            ObservableCollection<T> collection = [.. list];
             return collection;
         }
     }

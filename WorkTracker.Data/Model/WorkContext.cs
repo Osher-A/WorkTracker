@@ -9,13 +9,8 @@ using System.Threading.Tasks;
 
 namespace WorkTracker.Data.Model
 {
-    public sealed class WorkContext : DbContext
+    public sealed class WorkContext(DbContextOptions dbContextOptions) : DbContext(dbContextOptions)
     {
-        public WorkContext(DbContextOptions dbContextOptions)
-            : base(dbContextOptions)
-        {
-        }
-
         public DbSet<Work> Works { get; set; }
 
         public DbSet<WorkDetails> WorksDetails { get; set; }
