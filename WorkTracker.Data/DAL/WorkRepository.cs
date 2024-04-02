@@ -25,6 +25,13 @@ namespace WorkTracker.Data.DAL
 
         }
 
+        public async Task<Work?> GetWork(int id)
+        {
+            return await _db.Works
+                .Include(x => x.WorkDetails)
+                .SingleOrDefaultAsync(x => x.Id == id);
+        }
+
         public async Task<ICollection<Work>> GetWorks(DateTime From, DateTime To)
         {
             return await _db.Works

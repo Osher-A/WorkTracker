@@ -13,5 +13,6 @@ namespace WorkTracker.Data.DAL
         Task UpdateWork(Work workDTO);
         Task DeleteWork(int id);
         Task<ICollection<Work>> GetWorks(DateTime From, DateTime To);
+        Task<Work?> GetWork(int id);
     }
 }

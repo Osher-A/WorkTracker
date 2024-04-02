@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTracker.DTO", "WorkTrac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTracker.Data", "WorkTracker.Data\WorkTracker.Data.csproj", "{52500A3C-85EC-49B7-91EA-3B49DA2D5832}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTracker.WebAPI", "WorkTracker.WebAPI\WorkTracker.WebAPI.csproj", "{26FF2DDD-2298-4EB0-BFA1-247ADBDDBF69}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{52500A3C-85EC-49B7-91EA-3B49DA2D5832}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52500A3C-85EC-49B7-91EA-3B49DA2D5832}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52500A3C-85EC-49B7-91EA-3B49DA2D5832}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26FF2DDD-2298-4EB0-BFA1-247ADBDDBF69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26FF2DDD-2298-4EB0-BFA1-247ADBDDBF69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26FF2DDD-2298-4EB0-BFA1-247ADBDDBF69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26FF2DDD-2298-4EB0-BFA1-247ADBDDBF69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +56,7 @@ Global
 		{29E1C81D-01B8-4A49-8271-501F58855F7D} = {13F331C5-BEAF-4E4E-8C77-87806DA85622}
 		{244F71BE-077E-43B3-8F73-27901239C6FA} = {E94EAB7E-F215-41FC-88DE-1535A72E0F58}
 		{52500A3C-85EC-49B7-91EA-3B49DA2D5832} = {4EC23152-F3A7-46FF-9B0C-C01604143DD5}
+		{26FF2DDD-2298-4EB0-BFA1-247ADBDDBF69} = {3678F78F-CCDA-4342-AE45-9F8490A2B45F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {27A33101-61BE-4EAA-A4BF-008A04F0D66F}

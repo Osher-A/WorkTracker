@@ -5,9 +5,15 @@ using WorkTracker.DTO;
 
 namespace WorkTracker.BusinessLogic
 {
-    public sealed class WorkBusinessLogic(IMapper mapper, IWorkRepository workRepository)
+    public sealed class WorkBusinessLogic(IMapper mapper, IWorkRepository workRepository) : IWorkBusinessLogic
     {
         public async Task AddWork(WorkDTO work) => await workRepository.AddWork(MapToModel(work));
+
+        public async Task<WorkDTO> GetWork(int id)
+        {
+            var work = await workRepository.GetWork(id);
+            return mapper.Map<WorkDTO>(work);
+        }
 
         public async Task UpdateWork(WorkDTO work) => await workRepository.UpdateWork(MapToModel(work));
 
