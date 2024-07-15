@@ -29,8 +29,9 @@
 
             <div class="btn-group-flex" role="group">
                 <!-- Cancel and Go Back Button -->
-                <button class="btn small form-control" @click="goBack" title="Go back to main menu">
-                    
+                 
+                <button class="btn small form-control" @click="this.$router.push({ name: 'Grid'})" title="Go back to main menu">
+                <i class="fas fa-arrow-left"></i>
                 </button>
                 <!-- Clear Fields Button -->
                 <button class="btn small form-control" @click="removeWorkDetail" title="Clear work detail fields">
@@ -61,7 +62,6 @@
 </template>
 
 <script>
-    import Axios from 'axios';
     import { required, minLength, numeric} from '@vuelidate/validators';
     import { useVuelidate } from '@vuelidate/core';
 
@@ -114,10 +114,11 @@
                     return;
                 }
 
-                const axiosOptions = { method: 'POST', url: 'https://localhost:7244/api/Work', data: { date: this.date, workDetails: this.workDetails } };
+                const axiosOptions = { method: 'POST', url: '/Work', data: { date: this.date, workDetails: this.workDetails } };
               try {
-                  const response = await Axios(axiosOptions);  
-                    console.log(response);
+                    await this.$axios(axiosOptions);  
+
+                    this.$router.push({ name: 'Grid' });
               } catch (error) {
                     console.error(error);
                 }
