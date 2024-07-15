@@ -1,6 +1,5 @@
 <script setup>
-    // import AddWork from './components/AddWork.vue'
-    import GridView from './components/GridView.vue'
+    import { RouterView } from 'vue-router';
 </script>
 
 <template>
@@ -13,7 +12,7 @@
     </header>
 
     <main>
-        <GridView />
+       <RouterView />
     </main>
 </template>
 
