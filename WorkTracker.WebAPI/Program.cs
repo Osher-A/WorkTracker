@@ -27,6 +27,16 @@ namespace WorkTracker.WebAPI
                 options.UseSqlServer(connectionString);
             });
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAnyOrigin",
+                    builder => builder
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
+            });
+
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -42,8 +52,9 @@ namespace WorkTracker.WebAPI
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseCors("AllowAnyOrigin");
 
+            app.UseAuthorization();
 
             app.MapControllers();
 
