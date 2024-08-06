@@ -19,13 +19,13 @@
           </tr>
         </thead>
         <tbody>
-        <tr v-for="(workDay, index) in work" :key="index"
+        <tr v-for="(workDay, index) in work" :key="workDay.id"
           @click="selectRow(index)" 
           :class="{'selected-row': selectedIndex === index}">
           <td>{{ new Date(workDay.date).toLocaleDateString() }}</td>
           <td>{{ getTotalHours(workDay.workDetails) }}</td>
           <td class="action-buttons">
-            <button @click="editWorkDetail(workDay)">
+            <button @click="$router.push({ name: 'Edit', params: {id: workDay.id}})">
               <i class="fas fa-pencil-alt"></i>
             </button>
             <button @click="deleteWorkDetail(workDay)">

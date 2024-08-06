@@ -70,7 +70,7 @@
             return {
                 date: new Date().toISOString().slice(0, 10),
                 currentWorkDetail: {}, // Initial client
-                workDetails: [] // Array to store multiple clients
+                workDetails: [] // Array to store multiple work details
                 };
         },
         validations() {
@@ -113,6 +113,8 @@
                     // Prevent submission if any field is invalid
                     return;
                 }
+
+                this.workDetails.push(this.currentWorkDetail);
 
                 const axiosOptions = { method: 'POST', url: '/Work', data: { date: this.date, workDetails: this.workDetails } };
               try {

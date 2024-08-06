@@ -20,6 +20,16 @@ const router = createRouter({
           browserTabTitle: 'Home'
         },
       },
+
+      {
+        path: '/edit/:id',
+        name: 'Edit',
+        component: () => import('./views/EditWork.vue'),
+        meta: {
+          browserTabTitle: 'Edit'
+        },
+        props: true
+      }
     ]
 });
 
