@@ -20,12 +20,18 @@ namespace WorkTracker.WebAPI.Controllers
         {
             var workers = await _workerBusinessLogic.GetWorks(fromDate, toDate);
 
-            if (workers == null || workers.Count < 1)
+            return Ok(workers);
+        }
+
+        [HttpGet("{id}", Name = "GetWorkById")]
+        public async Task<ActionResult<WorkDTO>> Get(int id)
+        {
+            var work = await _workerBusinessLogic.GetWork(id);
+            if (work == null)
             {
                 return NotFound();
             }
-
-            return Ok(workers);
+            return Ok(work);
         }
 
 
@@ -36,15 +42,10 @@ namespace WorkTracker.WebAPI.Controllers
             return Created();
         }
 
-        [HttpPut("{id}", Name = "UpdateWork")]
-        public async Task<ActionResult<WorkDTO>> Put(int id, [FromBody] WorkDTO worker)
+        [HttpPut(Name = "UpdateWork")]
+        public async Task<ActionResult<WorkDTO>> Put([FromBody] WorkDTO worker)
         {
-            if (id != worker.Id)
-            {
-                return BadRequest();
-            }
-
-            var work = await _workerBusinessLogic.GetWork(id);
+            var work = await _workerBusinessLogic.GetWork(worker.Id);
             if (work == null)
             {
                 return NotFound();
