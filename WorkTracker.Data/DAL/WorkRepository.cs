@@ -29,6 +29,7 @@ namespace WorkTracker.Data.DAL
         {
             return await _db.Works
                 .Include(x => x.WorkDetails)
+                .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
 
@@ -42,9 +43,44 @@ namespace WorkTracker.Data.DAL
 
         public async Task UpdateWork(Work work)
         {
-            _db.Update(work);
+            var existingWork = await _db.Works
+               .Include(x => x.WorkDetails)
+               .SingleOrDefaultAsync(x => x.Id == work.Id);
+
+            if (existingWork is null)
+            {
+                return;
+            }
+
+            // Update the properties of the existing entity
+            _db.Entry(existingWork).CurrentValues.SetValues(work);
+
+            // Update the related entities
+            foreach (var detail in work.WorkDetails)
+            {
+                var existingDetail = existingWork.WorkDetails.SingleOrDefault(d => d.Id == detail.Id);
+                if (existingDetail != null)
+                {
+                    _db.Entry(existingDetail).CurrentValues.SetValues(detail);
+                }
+                else
+                {
+                    existingWork.WorkDetails.Add(detail);
+                }
+            }
+
+            // Remove related entities that are no longer present
+            foreach (var existingDetail in existingWork.WorkDetails.ToList())
+            {
+                if (!work.WorkDetails.Any(d => d.Id == existingDetail.Id))
+                {
+                    _db.WorksDetails.Remove(existingDetail);
+                }
+            }
+
             await _db.SaveChangesAsync();
-            _db.Entry(work).State = EntityState.Detached;
+
+            _db.Entry(existingWork).State = EntityState.Detached;
         }
     }
 }
