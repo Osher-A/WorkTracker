@@ -11,6 +11,8 @@ namespace WorkTracker.BusinessLogic
             CreateMap<WorkDTO, Work>().ReverseMap();
 
             CreateMap<WorkDetailsDTO, WorkDetails>().ReverseMap();
+
+            CreateMap<ClientDTO, Client>().ReverseMap();
         }
     }
 }

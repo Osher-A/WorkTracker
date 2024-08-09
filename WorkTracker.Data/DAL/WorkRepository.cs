@@ -16,10 +16,20 @@ namespace WorkTracker.Data.DAL
 
         public async Task DeleteWork(int id)
         {
-            var workToDelete = _db.Works.SingleOrDefault(x => x.Id == id);
+            var workToDelete = await _db.Works
+                .Include(x => x.WorkDetails)
+                .SingleOrDefaultAsync(x => x.Id == id);
+
             if (workToDelete is not null)
             {
-                _db.Remove(workToDelete);
+                // Remove each WorkDetail associated with the Work
+                foreach (var detail in workToDelete.WorkDetails.ToList())
+                {
+                    _db.WorksDetails.Remove(detail);
+                }
+
+                // Remove the Work entity
+                _db.Works.Remove(workToDelete);
                 await _db.SaveChangesAsync();
             }
 
@@ -28,7 +38,7 @@ namespace WorkTracker.Data.DAL
         public async Task<Work?> GetWork(int id)
         {
             return await _db.Works
-                .Include(x => x.WorkDetails)
+                .Include(x => x.WorkDetails).ThenInclude(x => x.Client)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
@@ -36,7 +46,7 @@ namespace WorkTracker.Data.DAL
         public async Task<ICollection<Work>> GetWorks(DateTime From, DateTime To)
         {
             return await _db.Works
-                .Include(x => x.WorkDetails)
+                .Include(x => x.WorkDetails).ThenInclude(x => x.Client)
                 .Where(w => w.Date >= From && w.Date <= To)
                 .ToListAsync();
         }
@@ -44,7 +54,7 @@ namespace WorkTracker.Data.DAL
         public async Task UpdateWork(Work work)
         {
             var existingWork = await _db.Works
-               .Include(x => x.WorkDetails)
+               .Include(x => x.WorkDetails).ThenInclude(x => x.Client)
                .SingleOrDefaultAsync(x => x.Id == work.Id);
 
             if (existingWork is null)

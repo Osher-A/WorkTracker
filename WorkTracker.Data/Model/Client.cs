@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace WorkTracker.Data.Model
 {
-    public class WorkDetails
+    public sealed class Client
     {
         public int Id { get; set; }
-        public string Description { get; set; }
-        public float Hours { get; set; }
-        public Client Client { get; set; }
-        public int ClientId { get; set; }
+
+        public string Name { get; set; }
     }
 }

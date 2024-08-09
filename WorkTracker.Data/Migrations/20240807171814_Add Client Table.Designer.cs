@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorkTracker.Data.Model;
 
@@ -11,9 +12,11 @@ using WorkTracker.Data.Model;
 namespace WorkTracker.Migrations
 {
     [DbContext(typeof(WorkContext))]
-    partial class WorkContextModelSnapshot : ModelSnapshot
+    [Migration("20240807171814_Add Client Table")]
+    partial class AddClientTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,8 +66,8 @@ namespace WorkTracker.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ClientId")
-                        .HasColumnType("int");
+                    b.Property<string>("ClientName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -78,8 +81,6 @@ namespace WorkTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId");
-
                     b.HasIndex("WorkId");
 
                     b.ToTable("WorksDetails");
@@ -87,17 +88,9 @@ namespace WorkTracker.Migrations
 
             modelBuilder.Entity("WorkTracker.Data.Model.WorkDetails", b =>
                 {
-                    b.HasOne("WorkTracker.Data.Model.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("WorkTracker.Data.Model.Work", null)
                         .WithMany("WorkDetails")
                         .HasForeignKey("WorkId");
-
-                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("WorkTracker.Data.Model.Work", b =>

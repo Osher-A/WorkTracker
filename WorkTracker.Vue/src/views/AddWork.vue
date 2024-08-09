@@ -10,8 +10,13 @@
         <div class="client-section">
             <div class="form-group">
                 <label for="clientName">Client Name:</label>
-                <input type="text" v-model="currentWorkDetail.clientName" class="form-control">
-                <div class="invalid-feedback" v-if="v$.currentWorkDetail.clientName.$error ">Client name is required and must be at least 3 characters.</div>
+                <select v-model="currentWorkDetail.client.id" class="form-control">
+                    <option value=0 disabled selected="true">Select a client</option>
+                    <option v-for="client in clients" :key="client.id" :value="client.id">
+                        {{ client.name }}
+                    </option>
+                </select>
+                <div class="invalid-feedback" v-if="v$.currentWorkDetail.client.id.$error">Client is required.</div>
             </div>
 
             <!-- Work Description -->
@@ -30,15 +35,15 @@
             <div class="btn-group-flex" role="group">
                 <!-- Cancel and Go Back Button -->
                  
-                <button class="btn small form-control" @click="this.$router.push({ name: 'Grid'})" title="Go back to main menu">
+                <button class="btn" @click="this.$router.push({ name: 'Grid'})" title="Go back to main menu">
                 <i class="fas fa-arrow-left"></i>
                 </button>
                 <!-- Clear Fields Button -->
-                <button class="btn small form-control" @click="removeWorkDetail" title="Clear work detail fields">
+                <button class="btn" @click="removeWorkDetail" title="Clear work detail fields">
                 <i class="fas fa-undo"></i>
                 </button>
                 <!-- Add Client Button -->
-                <button class="btn small form-control" @click="addWorkDetail" title="Add work detail">
+                <button class="btn" @click="addWorkDetail" title="Add work detail">
                 <i class="fas fa-plus"></i>
                 </button>
             </div>
@@ -62,23 +67,29 @@
 </template>
 
 <script>
-    import { required, minLength, numeric} from '@vuelidate/validators';
+    import { required, minValue, numeric} from '@vuelidate/validators';
     import { useVuelidate } from '@vuelidate/core';
-
     export default {
         data() {
             return {
                 date: new Date().toISOString().slice(0, 10),
-                currentWorkDetail: {}, // Initial client
-                workDetails: [] // Array to store multiple work details
+                currentWorkDetail: {
+                    client: { id: 0},
+                    description: '',
+                    hours: 0
+                }, // Initial client
+                workDetails: [], // Array to store multiple work details
+                clients: []
                 };
         },
         validations() {
         return {
             date: { required },
             currentWorkDetail: {
-                clientName: { required, minLength: minLength(3) },
-                hours: { required, numeric }
+                hours: { required, numeric, minValue: minValue(0.1)},
+                client:{
+                    id: {required, minValue: minValue(1)}
+                }
             },
             }
         },
@@ -86,6 +97,12 @@
             const v$ = useVuelidate();
             return { v$ };
         },
+
+        async created() {
+            const response = await this.$axios.get('/Client');
+            this.clients = response.data;
+        },
+        
         methods: {
             addWorkDetail() {
                 this.v$.$touch(); // Touch all fields to trigger validation
@@ -97,7 +114,12 @@
                 this.clearWorkDetailFields();
             },
             clearWorkDetailFields() {
-                this.currentWorkDetail = {};
+                this.currentWorkDetail = {
+                    client: { id: ''},
+                    description: '',
+                    hours: 0
+                };
+
                 // Reset the validation state for currentWorkDetail
                 if (this.v$.currentWorkDetail) {
                     this.v$.currentWorkDetail.$reset();

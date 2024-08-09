@@ -10,6 +10,7 @@
           <input type="date" class="form-control" id="searchToDate" v-model="searchToDate" @change="getFilteredResult" />
         </div>
      </div>
+    
       <table>
         <thead>
           <tr>
@@ -42,6 +43,11 @@
           </li>
         </ul>
       </div>
+      <div class="button-container">
+      <button class="button form-control mt-5" @click="$router.push({ name: 'Home'})" title="Add Work detail">
+        <i class="fas fa-plus"></i>
+      </button>
+    </div>
   </div>
 </template>
   
@@ -63,7 +69,7 @@
  
          // Calculate totals
          const totals = flattenedWorkDetails.reduce((acc, workDetail) => {
-           const clientName = workDetail.clientName;
+           const clientName = workDetail.client.name;
            if (!acc[clientName]) {
              acc[clientName] = { clientName, totalHours: 0 };
            }
@@ -154,39 +160,44 @@
     align-items: center; /* Align items vertically */
     margin-bottom: 20px; /* Space below the filters */
     padding: 10px;
-    border: 1px solid #ccc;
+    border: black 1px solid;
     border-radius: 5px;
 }
 
+.button-container {
+  text-align: center;
+  margin-bottom: 10px;
+}
 
 /* Table styling */
 table {
   width: 100%;
   margin-top: 20px;
   border-collapse: collapse;
-  border: 1px solid #ddd;
+  border: 1px solid black;
   min-width: 400px; 
 }
 
 
 td, th {
-  border: 1px solid #ddd;
+  border: 1px solid black;
   text-align: left;
   padding: 8px;
 }
 
 tr:nth-child(even) {
-  background-color: #f2f2f2;
+  background-color: #ddd;
 }
 
 .selected-row {
-  background-color: #2b1a1a81; /* Light grey, adjust as needed */
+  background-color: darkgray;
 }
 
 /* Buttons styling */
 button {
   cursor: pointer;
   padding: 10px 15px;
+  margin: 2px;
   border: none;
   border-radius: 5px;
   background-color: #111d2980;
@@ -195,7 +206,7 @@ button {
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: darkgray;
 }
 
 .action-buttons {

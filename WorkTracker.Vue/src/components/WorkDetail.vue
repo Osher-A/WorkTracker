@@ -2,8 +2,13 @@
     <div class="client-section">
         <div class="form-group">
             <label for="clientName">Client Name:</label>
-            <input type="text" v-model="value.clientName" class="form-control">
-            <div class="invalid-feedback" v-if="v$.value.clientName.$error ">Client name is required and must be at least 3 characters.</div>
+                <select v-model="value.client.id" class="form-control">
+                    <option value=0 disabled selected="true">Select a client</option>
+                    <option v-for="client in clients" :key="client.id" :value="client.id">
+                        {{ client.name }}
+                    </option>
+                </select>
+                <div class="invalid-feedback" v-if="v$.value.client.id.$error">Client is required.</div>
         </div>
 
         <!-- Work Description -->
@@ -22,25 +27,29 @@
         <div class="btn-group-flex" role="group">
             <!-- Cancel and Go Back Button -->
             
-            <button class="btn small form-control" @click="this.$router.push({ name: 'Grid'})" title="Go back to main menu">
+            <button class="btn" @click="this.$router.push({ name: 'Grid'})" title="Go back to main menu">
             <i class="fas fa-arrow-left"></i>
             </button>
             <!-- remove work detail-->
-            <button class="btn small form-control" @click="$emit('remove')" title="Remove work detail">
+            <button class="btn" @click="$emit('remove')" title="Remove work detail">
             <i class="fas fa-undo"></i>
             </button>
             <!-- Save changes -->
-            <button class="btn small form-control" @click="editWork" title="Save changes">
+            <button class="btn" @click="editWork" title="Save changes">
             <i class="fas fa-save"></i>
+            </button>
+            <!--Add Work button-->
+            <button class="btn" @click="addWorkDetail" title="Add work detail">
+            <i class="fas fa-plus"></i>
             </button>
         </div>
     </div>
 </template>
 <script>
-    import { required, minLength, numeric} from '@vuelidate/validators';
-    import { useVuelidate } from '@vuelidate/core';
+import { required, minValue, numeric} from '@vuelidate/validators';
+import { useVuelidate } from '@vuelidate/core';
 export default {
-    emits: ['update:modelValue', 'remove'],
+    emits: ['update:modelValue', 'remove', 'add'],
     // by using modelValue, we can use v-model on the parent component and it would automaticlly bind the value to the modelValue prop 
     // if we were to use a differnt name we would have to add in the parent compenent v-bind (or the equivilent shorthand) to bind it manually in the parent component
     props: {
@@ -52,7 +61,8 @@ export default {
 
     data() {
         return {
-           value: this.modelValue
+           value: this.modelValue,
+           clients: []
         }
     },
     setup() {
@@ -63,25 +73,33 @@ export default {
     validations() {
         return {
             value: {
-                clientName: { required, minLength: minLength(3) },
-                hours: { required, numeric }
+                hours: { required, numeric, minValue: minValue(0.1)},
+                client: {
+                    id: { required, minValue: minValue(1)}, // Client is required and must be greater than 0
+                }
             },
             }
         },
+    async created() {
+        const response = await this.$axios.get('/Client');
+        this.clients = response.data;
+    },
 
 
-
-methods: {
-    editWork() {
-        this.v$.$touch(); // Touch all fields to trigger validation
-                if (this.v$.$invalid) {
-                    // Prevent submission if any field is invalid
-                    return;
-                }
-            // by using the event name - update:modelValue, we can use v-model on the parent without specifying the event name if we use a different name than we would need to specify the event name in the parent component v-model:eventName
-            this.$emit('update:modelValue', this.modelValue);
-        }
-    }
+    methods: {
+        editWork() {
+            this.v$.$touch(); // Touch all fields to trigger validation
+                    if (this.v$.$invalid) {
+                        // Prevent submission if any field is invalid
+                        return;
+                    }
+                // by using the event name - update:modelValue, we can use v-model on the parent without specifying the event name if we use a different name than we would need to specify the event name in the parent component v-model:eventName
+                this.$emit('update:modelValue', this.modelValue);
+            },
+            addWorkDetail() {
+                this.$emit('add');
+            }
+        },
 }
 </script>
 

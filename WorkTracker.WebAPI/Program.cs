@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using WorkTracker.BusinessLogic;
 using WorkTracker.Data.DAL;
 using WorkTracker.Data.Model;
+using WorkTracker.WebAPI.Controllers;
 
 namespace WorkTracker.WebAPI
 {
@@ -17,6 +18,8 @@ namespace WorkTracker.WebAPI
             builder.Services.AddControllers();
             builder.Services.AddScoped<IWorkBusinessLogic, WorkBusinessLogic>();
             builder.Services.AddScoped<IWorkRepository, WorkRepository>();
+            builder.Services.AddScoped<IClientRepository, ClientRepository>();
+            builder.Services.AddScoped<IClientBusinessLogic, ClientBusinessLogic>();
             builder.Services.AddAutoMapper(typeof(BusinessLogic.Mapper).Assembly);
 
             // get connection string from appsettings.json

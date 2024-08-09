@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace WorkTracker.DTO
 {
-    public class WorkDetailsDTO
+    public class ClientDTO
     {
         public int Id { get; set; }
-        public string Description { get; set; }
-        public float Hours { get; set; }
-        public ClientDTO Client { get; set; }
+
+        public string? Name { get; set; }
     }
 }

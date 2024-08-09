@@ -7,13 +7,9 @@ namespace WorkTracker.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class WorkController : ControllerBase
+    public class WorkController(IWorkBusinessLogic workerService) : ControllerBase
     {
-        private readonly IWorkBusinessLogic _workerBusinessLogic;
-        public WorkController(IWorkBusinessLogic workerService)
-        {
-            _workerBusinessLogic = workerService;
-        }
+        private readonly IWorkBusinessLogic _workerBusinessLogic = workerService;
 
         [HttpGet(Name = "GetWorks")]
         public async Task<ActionResult<IEnumerable<WorkDTO>>> Get([FromQuery] DateTime fromDate, [FromQuery] DateTime toDate)

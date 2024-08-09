@@ -15,6 +15,8 @@ namespace WorkTracker.Data.Model
 
         public DbSet<WorkDetails> WorksDetails { get; set; }
 
+        public DbSet<Client> Clients { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["WorkDb"].ConnectionString)

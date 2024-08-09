@@ -10,7 +10,8 @@
         <work-detail v-for="(workDetail, index) in work.workDetails" 
             :key="index"
             v-model="work.workDetails[index]"
-            @remove="removeWorkDetail(index)" />
+            @remove="removeWorkDetail(index)"
+            @add="addWorkDetail" />
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <!-- Number of Clients -->
             <div class="number-of-clients" style="flex-grow: 1; text-align: left;">
@@ -57,23 +58,12 @@
             return { v$ };
         },
         methods: {
-            editWork() {
-                this.v$.$touch(); // Touch all fields to trigger validation
-                if (this.v$.$invalid) {
-                    // Prevent submission if any field is invalid
-                    return;
-                }
-                this.clearWorkFields();
-            },
-            clearWorkFields() {
-                this.work = {};
-                // Reset the validation state for currentWorkDetail
-                if (this.v$.work) {
-                    this.v$.work.$reset();
-                }
-            },
             removeWorkDetail(index) {
                 this.work.workDetails.splice(index, 1);
+            },
+
+            addWorkDetail() {
+                this.work.workDetails.push({ client: { id: 0 }, description: '', hours: 0 });
             },
             async submitWork() {
                 console.log(this.work);
@@ -95,7 +85,8 @@
               } catch (error) {
                     console.error(error);
                 }
-            }
+            },
+
         },
         computed: {
             numberOfClients() {

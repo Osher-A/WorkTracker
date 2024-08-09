@@ -28,7 +28,27 @@ namespace WorkTracker.BusinessLogic
 
         private Work MapToModel(WorkDTO work)
         {
-            return mapper.Map<Work>(work);
+            var workDetails = new List<WorkDetails>();
+
+            foreach (var workDetailsDTO in work.WorkDetails)
+            {
+                workDetails.Add(new WorkDetails
+                {
+                    Id = workDetailsDTO.Id,
+                    Description = workDetailsDTO.Description,
+                    Hours = workDetailsDTO.Hours,
+                    ClientId = workDetailsDTO.Client.Id
+                });
+            }
+
+            var modelWork = new Work
+            {
+                Id = work.Id,
+                Date = work.Date,
+                WorkDetails = workDetails
+            };
+
+            return modelWork;
         }
     }
 }
