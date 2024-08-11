@@ -11,5 +11,7 @@ namespace WorkTracker.Data.Model
         public int Id { get; set; }
 
         public string Name { get; set; }
+
+        public List<WorkDetails> WorkDetails { get; set; }
     }
 }

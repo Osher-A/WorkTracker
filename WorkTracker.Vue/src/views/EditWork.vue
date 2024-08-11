@@ -1,32 +1,34 @@
 <template>
-    <div class="work-tracker-form">
-        <!-- Date Picker -->
-        <div class="form-group">
-            <label for="date">Date:</label>
-            <input type="date" id="date" v-model="formattedDate" class="form-control">
-        </div>
+    <main-layout :width="'40%'">
+        <title-header :title="'Edit Work'"></title-header>
+        <div class="work-tracker-form">
+            <!-- Date Picker -->
+            <div class="form-group">
+                <label for="date">Date:</label>
+                <input type="date" id="date" v-model="formattedDate" class="form-control">
+            </div>
 
-        <!-- Client Information -->
-        <work-detail v-for="(workDetail, index) in work.workDetails" 
-            :key="index"
-            v-model="work.workDetails[index]"
-            @remove="removeWorkDetail(index)"
-            @add="addWorkDetail" />
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <!-- Number of Clients -->
-            <div class="number-of-clients" style="flex-grow: 1; text-align: left;">
-                <label style="font-weight:bold;">Number of Clients:</label>
-                <span style="padding: 4px; font-weight: bold;">{{ numberOfClients }}</span>
+            <work-detail v-for="(workDetail, index) in work.workDetails"
+                         :key="index"
+                         v-model="work.workDetails[index]"
+                         @remove="removeWorkDetail(index)"
+                         @add="addWorkDetail" />
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <!-- Number of Clients -->
+                <div class="number-of-clients" style="flex-grow: 1; text-align: left;">
+                    <label style="font-weight:bold;">Number of Clients:</label>
+                    <span style="padding: 4px; font-weight: bold;">{{ numberOfClients }}</span>
+                </div>
+                <!-- Total Hours Worked -->
+                <div class="total-hours" style="flex-grow: 1; text-align: right;">
+                    <label style="font-weight:bold;">Total Hours Worked:</label>
+                    <span style="padding: 4px; font-weight: bold;">{{ totalHours }}</span>
+                </div>
             </div>
-            <!-- Total Hours Worked -->
-            <div class="total-hours" style="flex-grow: 1; text-align: right;">
-                <label style="font-weight:bold;">Total Hours Worked:</label>
-                <span style="padding: 4px; font-weight: bold;">{{ totalHours }}</span>
-            </div>
+            <!-- Submit Button -->
+            <button class="btn btn-success form-control submit-btn" style="background-color: black;" @click="submitWork">Submit</button>
         </div>
-        <!-- Submit Button -->
-        <button class="btn btn-success form-control submit-btn" style="background-color: black;" @click="submitWork">Submit</button>
-    </div>
+    </main-layout>
 </template>
 
 <script>
@@ -120,7 +122,7 @@
 
 <style scoped>
     .work-tracker-form {
-        max-width: 800px;
+        width: 100%;
         min-width: 500px;
         margin: 0, auto;
         padding: 20px;
@@ -133,45 +135,11 @@
         margin-bottom: 20px;
     }
 
-    .client-section {
-        border: 1px solid #e0e0e0;
-        padding: 20px;
-        margin-bottom: 20px;
-        border-radius: 10px;
-    }
-
-    .remove-client-btn {
-        margin-top: 10px;
-    }
-
-    .add-client-btn {
-        margin-top: 20px;
-    }
-
     .submit-btn {
         margin-top: 30px;
     }
 
-    .btn-group-flex {
-    display: flex;
-    justify-content: space-between;
-}
-
-    .btn-group-flex .form-control {
-        flex-grow: 1; /* Make buttons grow equally */
-        margin: 0 5px; /* Add some space between buttons */
-    }
-
-    /* Adjust the first and last button margin for proper alignment */
-    .btn-group-flex .form-control:first-child {
-        margin-left: 0;
-    }
-
-    .btn-group-flex .form-control:last-child {
-        margin-right: 0;
-    }
-
-      .small {
+    .small {
         background-color: rgba(13, 30, 31, 0.342);
     }
     /* Add styles for .is-invalid and .invalid-feedback if not already present */

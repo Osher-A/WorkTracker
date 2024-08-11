@@ -1,4 +1,6 @@
 <template>
+    <main-layout :width="'40%'">
+        <title-header title="Add Work"></title-header>
     <div class="work-tracker-form">
         <!-- Date Picker -->
         <div class="form-group">
@@ -33,17 +35,12 @@
             </div>
 
             <div class="btn-group-flex" role="group">
-                <!-- Cancel and Go Back Button -->
-                 
-                <button class="btn" @click="this.$router.push({ name: 'Grid'})" title="Go back to main menu">
-                <i class="fas fa-arrow-left"></i>
-                </button>
                 <!-- Clear Fields Button -->
-                <button class="btn" @click="removeWorkDetail" title="Clear work detail fields">
+                <button class="btn small" @click="removeWorkDetail" title="Clear work detail fields">
                 <i class="fas fa-undo"></i>
                 </button>
                 <!-- Add Client Button -->
-                <button class="btn" @click="addWorkDetail" title="Add work detail">
+                <button class="btn small" @click="addWorkDetail" title="Add work detail">
                 <i class="fas fa-plus"></i>
                 </button>
             </div>
@@ -51,12 +48,12 @@
 
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <!-- Number of Clients -->
-            <div class="number-of-clients" style="flex-grow: 1; text-align: left;">
+            <div style="margin-top: 30px;flex-grow: 1; text-align: left;">
                 <label style="font-weight:bold;">Number of Clients:</label>
                 <span style="padding: 4px; font-weight: bold;">{{ numberOfClients }}</span>
             </div>
             <!-- Total Hours Worked -->
-            <div class="total-hours" style="flex-grow: 1; text-align: right;">
+            <div class="total-hours" style="margin-top: 30px; flex-grow: 1; text-align: right;">
                 <label style="font-weight:bold;">Total Hours Worked:</label>
                 <span style="padding: 4px; font-weight: bold;">{{ totalHours }}</span>
             </div>
@@ -64,6 +61,7 @@
         <!-- Submit Button -->
         <button class="btn btn-success form-control submit-btn" style="background-color: black;" @click="submitWork">Submit</button>
     </div>
+</main-layout>
 </template>
 
 <script>
@@ -161,9 +159,8 @@
 
 <style scoped>
     .work-tracker-form {
-        max-width: 800px;
+        width: 100%;
         min-width: 500px;
-        margin: 0, auto;
         padding: 20px;
         background-color: #ffffff;
         border: 1px solid #e0e0e0;
@@ -172,21 +169,6 @@
 
     .form-group {
         margin-bottom: 20px;
-    }
-
-    .client-section {
-        border: 1px solid #e0e0e0;
-        padding: 20px;
-        margin-bottom: 20px;
-        border-radius: 10px;
-    }
-
-    .remove-client-btn {
-        margin-top: 10px;
-    }
-
-    .add-client-btn {
-        margin-top: 20px;
     }
 
     .submit-btn {

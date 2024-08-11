@@ -29,6 +29,11 @@ const router = createRouter({
           browserTabTitle: 'Edit'
         },
         props: true
+      },
+      {
+        path: '/clients',
+        name: 'ClientManager',
+        component: () => import('./views/ClientManager.vue'),
       }
     ]
 });

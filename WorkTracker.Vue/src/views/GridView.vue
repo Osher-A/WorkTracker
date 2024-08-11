@@ -1,5 +1,6 @@
 <template>
-    <div class="container">
+    <main-layout :width="'40%'">
+      <title-header title="Work Grid"></title-header>
       <div class="search-filters">
         <div>
           <label for="searchFromDate">From:</label>
@@ -48,7 +49,7 @@
         <i class="fas fa-plus"></i>
       </button>
     </div>
-  </div>
+    </main-layout>
 </template>
   
   <script>
@@ -129,15 +130,7 @@
   }
 };
   </script>
-  
-  <style>
-
-.container {
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr; /* This creates a single column layout where each child takes full width */
-  gap: 20px; /* Adjust the gap as needed */
-}
+  <style scoped>
 
 .search-filters, table, .container > div {
   width: 100%; /* Ensures each child takes the full width of its parent */
@@ -146,12 +139,6 @@
 .search-filters-input {
   margin: 0 10px 20px 0; /* Adds spacing between inputs and below them */
 }
-
-.search-filters-label {
-  display: block; /* Makes labels appear above inputs */
-  margin-bottom: 5px; /* Spacing between label and input */
-}
-
 
 .search-filters {
     display: flex;
@@ -171,11 +158,10 @@
 
 /* Table styling */
 table {
-  width: 100%;
   margin-top: 20px;
   border-collapse: collapse;
   border: 1px solid black;
-  min-width: 400px; 
+  min-width: 500px; 
 }
 
 

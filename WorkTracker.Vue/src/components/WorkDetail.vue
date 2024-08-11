@@ -25,21 +25,16 @@
         </div>
 
         <div class="btn-group-flex" role="group">
-            <!-- Cancel and Go Back Button -->
-            
-            <button class="btn" @click="this.$router.push({ name: 'Grid'})" title="Go back to main menu">
-            <i class="fas fa-arrow-left"></i>
-            </button>
             <!-- remove work detail-->
-            <button class="btn" @click="$emit('remove')" title="Remove work detail">
+            <button class="btn small" @click="$emit('remove')" title="Remove work detail">
             <i class="fas fa-undo"></i>
             </button>
             <!-- Save changes -->
-            <button class="btn" @click="editWork" title="Save changes">
+            <button class="btn small" @click="editWork" title="Save changes">
             <i class="fas fa-save"></i>
             </button>
             <!--Add Work button-->
-            <button class="btn" @click="addWorkDetail" title="Add work detail">
+            <button class="btn small" @click="addWorkDetail" title="Add work detail">
             <i class="fas fa-plus"></i>
             </button>
         </div>
@@ -103,7 +98,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
  .client-section {
         border: 1px solid #e0e0e0;
         padding: 20px;

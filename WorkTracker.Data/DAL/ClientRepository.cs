@@ -21,10 +21,10 @@ namespace WorkTracker.Data.DAL
 
         public async Task DeleteClient(int id)
         {
-            var cllientToDelete = _db.Clients.SingleOrDefault(x => x.Id == id);
-            if (cllientToDelete is not null)
+            var clientToDelete = _db.Clients.SingleOrDefault(x => x.Id == id);
+            if (clientToDelete is not null)
             {
-                _db.Remove(cllientToDelete);
+                _db.Remove(clientToDelete);
                 await _db.SaveChangesAsync();
             }
 

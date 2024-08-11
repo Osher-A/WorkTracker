@@ -1,52 +1,51 @@
-<script setup>
-    import { RouterView } from 'vue-router';
-</script>
-
 <template>
     <header>
-        <!--<img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-        <div class="wrapper">
-            <HelloWorld msg="You did it!" />
-        </div>-->
+        <nav>
+            <RouterLink to="/" exact>Add Work</RouterLink>
+            <RouterLink to="/list">Work lists</RouterLink>
+            <RouterLink to="/clients">Clients</RouterLink>
+        </nav>
     </header>
 
     <main>
         <RouterView v-slot="{ Component }">
             <Transition name="fade" mode="out-in">
-                <component :is="Component" />
+                <component :is="Component"/>
             </Transition>
         </RouterView>
     </main>
 </template>
 
+<script setup>
+    import { RouterView, RouterLink } from 'vue-router';
+</script>
+
+
 <style scoped>
     header {
-        line-height: 1.5;
+        display: flex;
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Align items vertically */
+        height: 60px; /* Adjust height as needed */
+        width: 100%; /* Ensure header spans full width */
+        position: fixed; /* Fix header at the top */
+        top: 0;
+        left: 0;
+        background-color: white; /* Set background color */
+        z-index: 1000; /* Ensure header is above other content */
     }
 
-    .logo {
-        display: block;
-        margin: 0 auto 2rem;
+    nav {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .router-link-active {
+        font-weight: bold;
+        color: blue;
     }
 
     @media (min-width: 1024px) {
-        header {
-            display: flex;
-            place-items: center;
-            padding-right: calc(var(--section-gap) / 2);
-        }
-
-        main {
-            display: flex;
-            place-items: center;
-            padding: 0 var(--section-gap);
-        }
-
-        .logo {
-            margin: 0 2rem 0 0;
-        }
-
         header .wrapper {
             display: flex;
             place-items: flex-start;
@@ -56,15 +55,12 @@
 </style>
 
 <style>
-    body {
-        background-color: whitesmoke; /* Set your desired background color or image here */
-        font-size: larger;
-    }
     .fade-enter-active, .fade-leave-active {
-    transition: opacity 0.5s ease;
-}
+        transition: opacity 0.5s ease;
+    }
 
-.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
-    opacity: 0;
-}
+    .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+        opacity: 0;
+    }
+
 </style>

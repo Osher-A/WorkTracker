@@ -26,6 +26,12 @@ namespace WorkTracker.Data.Model
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Client>()
+                .HasMany(c => c.WorkDetails)
+                .WithOne(wd => wd.Client)
+                .HasForeignKey(wd => wd.ClientId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             base.OnModelCreating(modelBuilder);
         }
     }

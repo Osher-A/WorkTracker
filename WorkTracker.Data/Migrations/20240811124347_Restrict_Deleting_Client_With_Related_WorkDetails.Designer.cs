@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorkTracker.Data.Model;
 
@@ -11,9 +12,11 @@ using WorkTracker.Data.Model;
 namespace WorkTracker.Migrations
 {
     [DbContext(typeof(WorkContext))]
-    partial class WorkContextModelSnapshot : ModelSnapshot
+    [Migration("20240811124347_Restrict_Deleting_Client_With_Related_WorkDetails")]
+    partial class Restrict_Deleting_Client_With_Related_WorkDetails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
