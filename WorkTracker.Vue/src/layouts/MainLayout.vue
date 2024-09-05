@@ -10,7 +10,7 @@
         props: {
             width: {
                 type: String,
-                default: '50%'
+                default: '30%'
             }
         }
     };

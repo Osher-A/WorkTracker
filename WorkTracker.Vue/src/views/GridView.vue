@@ -1,5 +1,5 @@
 <template>
-    <main-layout :width="'40%'">
+    <main-layout>
       <title-header title="Work Grid"></title-header>
       <div class="search-filters">
         <div>

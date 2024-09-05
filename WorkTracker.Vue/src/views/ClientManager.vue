@@ -1,5 +1,5 @@
 <template>
-  <main-layout :width="'40%'">
+  <main-layout >
     <title-header title="Client Manager"></title-header>
     <div class="client-manager">
       <table>

@@ -1,5 +1,5 @@
 <template>
-    <main-layout :width="'40%'">
+    <main-layout>
         <title-header :title="'Edit Work'"></title-header>
         <div class="work-tracker-form">
             <!-- Date Picker -->
