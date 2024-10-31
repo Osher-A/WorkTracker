@@ -1,11 +1,11 @@
 <template>
     <main-layout>
-        <title-header :title="'Edit Work'"></title-header>
+        <title-header :title="title"></title-header>
         <div class="work-tracker-form">
             <!-- Date Picker -->
             <div class="form-group">
                 <label for="date">Date:</label>
-                <input type="date" id="date" v-model="formattedDate" class="form-control">
+                <input type="date" id="date" v-model="formattedDate" class="form-control" :disabled="!isEditMode">
             </div>
 
             <work-detail v-for="(workDetail, index) in work.workDetails"
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <!-- Submit Button -->
-            <button class="btn btn-success form-control submit-btn" style="background-color: black;" @click="submitWork">Submit</button>
+            <button v-if="isEditMode" class="btn btn-success form-control submit-btn" style="background-color: black;" @click="submitWork">Submit</button>
         </div>
     </main-layout>
 </template>
@@ -35,6 +35,7 @@
     import { required } from '@vuelidate/validators';
     import { useVuelidate } from '@vuelidate/core';
     import WorkDetail from '@/components/WorkDetail.vue';
+    import { useEditModeStore } from '@/stores/editModeStore';
 
     export default {
         props: ['id'],
@@ -57,7 +58,8 @@
        },
         setup() {
             const v$ = useVuelidate();
-            return { v$ };
+            const isEditMode = useEditModeStore().getEditMode;
+            return { v$ , isEditMode };
         },
         methods: {
             removeWorkDetail(index) {
@@ -91,6 +93,9 @@
 
         },
         computed: {
+            title() {
+                return this.isEditMode ? 'Edit Work' : 'View Work';
+            },
             numberOfClients() {
                 return this.work.workDetails?.length || 0;
             },

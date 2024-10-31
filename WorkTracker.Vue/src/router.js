@@ -22,9 +22,9 @@ const router = createRouter({
       },
 
       {
-        path: '/edit/:id',
-        name: 'Edit',
-        component: () => import('./views/EditWork.vue'),
+        path: '/work-day/:id',
+        name: 'WorkDay',
+        component: () => import('./views/WorkDay.vue'),
         meta: {
           browserTabTitle: 'Edit'
         },

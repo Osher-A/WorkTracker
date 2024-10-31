@@ -21,6 +21,6 @@
         flex-direction:  column;
         justify-content: center; 
         align-items: center; 
-        margin-top: 60px; /* The height of the header */
+        margin-bottom: 30px;
     }
 </style>

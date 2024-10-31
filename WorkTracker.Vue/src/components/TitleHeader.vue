@@ -21,8 +21,8 @@
 
 <style scoped>
 h1 {
-    margin-top: 20%;
-    margin-bottom: 20%;
+    margin-top: 15%;
+    margin-bottom: 10%;
     color: grey;
     text-align: center;
     padding: 20px;

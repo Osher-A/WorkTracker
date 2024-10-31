@@ -1,4 +1,5 @@
 <template>
+  <b-overlay :show="isLoading" spinner>
     <main-layout>
       <title-header title="Work Grid"></title-header>
       <div class="search-filters">
@@ -27,8 +28,11 @@
           <td>{{ new Date(workDay.date).toLocaleDateString() }}</td>
           <td>{{ getTotalHours(workDay.workDetails) }}</td>
           <td class="action-buttons">
-            <button @click="$router.push({ name: 'Edit', params: {id: workDay.id}})">
+            <button @click="editWorkDay(workDay)">
               <i class="fas fa-pencil-alt"></i>
+            </button>
+            <button @click="viewWorkDay(workDay)">
+                <i class="fas fa-eye"></i>
             </button>
             <button @click="deleteWorkDetail(workDay)">
               <i class="fas fa-trash"></i>
@@ -44,18 +48,24 @@
           </li>
         </ul>
       </div>
+        <div class="total-hours">
+            Total Hours Worked: {{ totalHoursWorked }} hours
+        </div>
       <div class="button-container">
       <button class="button form-control mt-5" @click="$router.push({ name: 'Home'})" title="Add Work detail">
         <i class="fas fa-plus"></i>
       </button>
     </div>
     </main-layout>
+  </b-overlay>
 </template>
   
   <script>
+  import { useEditModeStore } from '@/stores/editModeStore';  // Import the store
   export default {
     data() {
       return {
+        isLoading: true,
         work: [],
         searchFromDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1, new Date().getTimezoneOffset() / -60).toISOString().slice(0, 10),
         searchToDate: new Date().toISOString().slice(0, 10),
@@ -84,12 +94,27 @@
        else{
           return 0;
        }
-      },
+        },
+      totalHoursWorked() {
+        if (this.work) {
+          return this.work.reduce((acc, workDay) => acc + this.getTotalHours(workDay.workDetails), 0);
+        }
+        else{
+          return 0;
+        }
+      }
     },
     methods: {
-      editWorkDetail(detail) {
-        this.$emit('edit-work-detail', detail);
+      viewWorkDay(workDay) {
+        useEditModeStore().setEditMode(false); // Set edit mode to false
+        this.$router.push({ name: 'WorkDay', params: { id: workDay.id } });
       },
+
+      editWorkDay(workDay) {
+        useEditModeStore().setEditMode(true); // Set edit mode to true
+        this.$router.push({ name: 'WorkDay', params: { id: workDay.id } });
+      },
+
       async deleteWorkDetail(workDay) {
         try {
           await this.$axios.delete(`/work/${workDay.id}`);
@@ -116,17 +141,21 @@
               toDate: this.searchToDate
             }
           });
-          this.work = result.data;
+          this.work = result.data.sort((a, b) => new Date(a.date) - new Date(b.date));
         } catch (error) {
           console.error('Error fetching work details:', error);
         }
       }
     },
     async created() {
-      // Fetch work details from the server
+      this.isLoading = true;
+
+      // fetch work details from the server
       this.searchfromDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1, new Date().getTimezoneOffset() / -60).toISOString().slice(0, 10);  
       this.searchToDate = new Date().toISOString().slice(0, 10);
       await this.apiResult();
+
+      this.isLoading = false;
   }
 };
   </script>
