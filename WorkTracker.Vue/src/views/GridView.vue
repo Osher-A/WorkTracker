@@ -5,11 +5,11 @@
       <div class="search-filters">
         <div>
           <label for="searchFromDate">From:</label>
-          <input type="date" class="form-control" id="searchFromDate" v-model="searchFromDate" @change="getFilteredResult"/>
+          <input type="date" class="form-control" id="searchFromDate" v-model="searchFromDate"/>
         </div>
         <div>
           <label for="searchToDate">To</label>
-          <input type="date" class="form-control" id="searchToDate" v-model="searchToDate" @change="getFilteredResult" />
+          <input type="date" class="form-control" id="searchToDate" v-model="searchToDate" />
         </div>
      </div>
     
@@ -61,18 +61,38 @@
 </template>
   
   <script>
-  import { useEditModeStore } from '@/stores/editModeStore';  // Import the store
+      import { useEditModeStore } from '@/stores/editModeStore';  // Import the store
+      import { useSearchRangeStore } from '@/stores/searchDateRangeStore';  // Import the store
+      import { useSelectedGridItemStore } from '@/stores/selectedGridItemStore';
+
   export default {
     data() {
       return {
         isLoading: true,
         work: [],
-        searchFromDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1, new Date().getTimezoneOffset() / -60).toISOString().slice(0, 10),
-        searchToDate: new Date().toISOString().slice(0, 10),
-        selectedIndex: null, // Tracks the selected row
       };
     },
     computed: {
+        searchFromDate: {
+            get() {
+                return useSearchRangeStore().searchFromDate;
+            },
+            set(value) {
+              const store = useSearchRangeStore();
+              store.setSearchFromDate(value);
+              this.getFilteredResult(); // Trigger the filtering logic
+            }
+        },
+        searchToDate: {
+            get() {
+                return useSearchRangeStore().searchToDate;
+            },
+            set(value) {
+              const store = useSearchRangeStore();
+              store.setSearchToDate(value);
+              this.getFilteredResult(); // Trigger the filtering logic
+            }
+        },
       totalHoursWorkedPerClient() {
        if (this.work) {
          // Flatten the structure to get a single list of all workDetails
@@ -102,7 +122,11 @@
         else{
           return 0;
         }
-      }
+      },
+      selectedIndex() {
+        const selectedGridItemStore = useSelectedGridItemStore();
+        return selectedGridItemStore.selectedGridItem; // Reactively link to the store's value
+        },
     },
     methods: {
       viewWorkDay(workDay) {
@@ -124,7 +148,7 @@
         }
       },
       selectRow(index) {
-        this.selectedIndex = index;
+        useSelectedGridItemStore().setSelectedGridItem(index); // Update the store with the selected index
       },
       getTotalHours(workDetails) {
         return workDetails.reduce((acc, work) => acc + work.hours, 0);
@@ -145,17 +169,12 @@
         } catch (error) {
           console.error('Error fetching work details:', error);
         }
-      }
-    },
-    async created() {
-      this.isLoading = true;
-
-      // fetch work details from the server
-      this.searchfromDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1, new Date().getTimezoneOffset() / -60).toISOString().slice(0, 10);  
-      this.searchToDate = new Date().toISOString().slice(0, 10);
-      await this.apiResult();
-
-      this.isLoading = false;
+      },
+      },
+      async created() {
+        this.isLoading = true;
+        await this.apiResult();
+        this.isLoading = false;
   }
 };
   </script>
@@ -205,7 +224,8 @@ tr:nth-child(even) {
 }
 
 .selected-row {
-  background-color: darkgray;
+  background-color: darkgray !important;
+  
 }
 
 /* Buttons styling */
