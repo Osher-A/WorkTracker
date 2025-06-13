@@ -13,14 +13,16 @@ import App from './App.vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
 
+
 // Import individual components and plugins from BootstrapVueNext
-import { BOverlay, BSpinner } from 'bootstrap-vue-next'
+import { BOverlay, BSpinner} from 'bootstrap-vue-next'
 const app = createApp(App);
 
 import router from './router';
 app.use(router);
 app.use(axiosPlugin); // Use the axios plugin
 app.use(createPinia());
+
 
 // Register individual components globally
 app.component('BOverlay', BOverlay);

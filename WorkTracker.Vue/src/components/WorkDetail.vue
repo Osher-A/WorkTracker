@@ -49,6 +49,26 @@ export default {
     // If we were to use a different prop name or event name, we would need to specify the custom event name in the parent component, e.g., `v-model:customEventName`.
     // In the child component, we would then need to manually emit the custom event using `this.$emit('update:customEventName', value)`.
     // Alternatively, we can use the `defineModel` function in the Composition API to handle custom prop and event names more easily.
+
+    // TO CLARIFY:
+    // v-model provides two-way binding between a value and an input/component.
+    //
+    // --- Native Inputs ---
+    // For native HTML inputs (like <input>, <textarea>, <select>):
+    //   - v-model binds the input's value to a data property in the same component (getter).
+    //   - When the user changes the input, native events (like 'input' or 'change') update the data property (setter).
+    //
+    // --- Custom Components ---
+    // For custom components (like <MyComponent v-model="someValue" />):
+    //   - The parent passes its value to the child via the 'modelValue' prop (getter).
+    //   - In the child, you can use a computed property with a getter (returns 'modelValue') and a setter (emits 'update:modelValue' with the new value).
+    //   - Alternatively, you can use v-model on native inputs inside the child, binding them to a local property, and then emit 'update:modelValue' when you want to sync with the parent.
+    //   - In Vue 3.4+, you can also use the defineModel macro for simpler syntax.
+    //   - The parent listens for 'update:modelValue' and updates its own data property accordingly.
+    //
+    // Summary:
+    //   - Native inputs: v-model uses the value attribute and native events within the same component.
+    //   - Custom components: v-model uses the 'modelValue' prop and 'update:modelValue' event for two-way binding between parent and child. The child can use a computed property, v-model on its own inputs, or defineModel to manage this.
     props: {
         modelValue: {
         type: Object,

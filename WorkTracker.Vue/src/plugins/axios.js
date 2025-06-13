@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // You can configure your axios instance here
 const axiosInstance = axios.create({
-  baseURL: 'https://localhost:7244/api',
+  baseURL: 'http://localhost:5244/api',
   // other configuration
 });
 

@@ -1,5 +1,5 @@
 <template>
-  <main-layout >
+  <main-layout width="100%" >
     <title-header title="Client Manager"></title-header>
     <div class="client-manager">
       <table>

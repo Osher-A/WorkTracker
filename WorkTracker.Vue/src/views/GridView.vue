@@ -1,6 +1,6 @@
 <template>
   <b-overlay :show="isLoading" spinner>
-    <main-layout>
+    <main-layout width="100%">
       <title-header title="Work Grid"></title-header>
       <div class="search-filters">
         <div>
@@ -57,6 +57,7 @@
       </button>
     </div>
     </main-layout>
+    
   </b-overlay>
 </template>
   
@@ -64,12 +65,14 @@
       import { useEditModeStore } from '@/stores/editModeStore';  // Import the store
       import { useSearchRangeStore } from '@/stores/searchDateRangeStore';  // Import the store
       import { useSelectedGridItemStore } from '@/stores/selectedGridItemStore';
+      import Swal from 'sweetalert2';
 
   export default {
     data() {
       return {
         isLoading: true,
         work: [],
+        showModal: true,
       };
     },
     computed: {
@@ -140,11 +143,20 @@
       },
 
       async deleteWorkDetail(workDay) {
-        try {
-          await this.$axios.delete(`/work/${workDay.id}`);
-          await this.apiResult();
-        } catch (error) {
-          console.error('Error deleting work detail:', error);
+        const result = await Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes, delete it!'
+        });
+        if (result.isConfirmed) {
+          try {
+            await this.$axios.delete(`/work/${workDay.id}`);
+            await this.apiResult();
+          } catch (error) {
+            console.error('Error deleting work detail:', error);
+          }
         }
       },
       selectRow(index) {
