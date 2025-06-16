@@ -21,12 +21,11 @@
 
 <style scoped>
 h1 {
-    margin-top: 15%;
     margin-bottom: 10%;
     color: grey;
     text-align: center;
-    padding: 20px;
-    border-radius: 10px;
+    padding: 45px;
+    border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 </style>

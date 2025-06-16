@@ -20,14 +20,20 @@
     import { RouterView, RouterLink } from 'vue-router';
 </script>
 
+<style>
+   body {
+    font-family:Arial, Helvetica, sans-serif;
+   }
+</style>
 
 <style scoped>
     header {
         display: flex;
         justify-content: center; /* Center horizontally */
         align-items: center; /* Align items vertically */
-        height: 60px; /* Adjust height as needed */
+        height: 20px; /* Adjust height as needed */
         width: 100%; /* Ensure header spans full width */
+        margin-top: 20px; /* Adjust top margin as needed */
         position: fixed; /* Fix header at the top */
         top: 0;
         left: 0;
@@ -38,6 +44,7 @@
     nav {
         display: flex;
         gap: 1rem;
+        font-size: x-large;
     }
 
     .router-link-active {
@@ -56,7 +63,7 @@
 
 <style>
     .fade-enter-active, .fade-leave-active {
-        transition: opacity 0.5s ease;
+        transition: opacity 0.5s  ease;
     }
 
     .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {

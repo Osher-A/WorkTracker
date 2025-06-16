@@ -24,5 +24,6 @@
         margin-bottom: 30px;
         min-width: 500px;
         max-width: 800px;
+        min-height: 100vh;
     }
 </style>
