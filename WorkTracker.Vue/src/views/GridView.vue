@@ -17,6 +17,7 @@
         <thead>
           <tr>
             <th>Date</th>
+            <th>Hours Per Client</th>
             <th>Total Hours</th>
             <th>Actions</th>
           </tr>
@@ -26,6 +27,13 @@
           @click="selectRow(index)" 
           :class="{'selected-row': selectedIndex === index}">
           <td>{{ new Date(workDay.date).toLocaleDateString() }}</td>
+          <td>
+            <ul>
+              <li v-for="(client, clientIndex) in getTotalHoursPerClient(workDay.workDetails)" :key="clientIndex">
+                <strong>{{ client.totalHours }} hrs </strong> - {{ client.clientName }}
+              </li>
+            </ul>
+          </td>
           <td>{{ getTotalHours(workDay.workDetails) }}</td>
           <td class="action-buttons">
             <button @click="editWorkDay(workDay)">
@@ -41,21 +49,21 @@
         </tr>
         </tbody>
       </table>
-      <div>
+      <div class="mt-3">
         <ul>
-          <li v-for="client in totalHoursWorkedPerClient" :key="client.clientName">
-            {{ client.clientName }}: {{ client.totalHours }} hours
+          <li v-for="client in totalHoursWorkedPerClientForSelectedDays" :key="client.clientName">
+            <strong>{{ client.totalHours }} - </strong>{{ client.clientName }}
           </li>
         </ul>
       </div>
         <div class="total-hours">
             Total Hours Worked: {{ totalHoursWorked }} hours
         </div>
-      <div class="button-container">
+      <!-- <div class="button-container">
       <button class="button form-control mt-5" @click="$router.push({ name: 'Home'})" title="Add Work detail">
         <i class="fas fa-plus"></i>
       </button>
-    </div>
+    </div> -->
     </main-layout>
     
   </b-overlay>
@@ -76,60 +84,64 @@
       };
     },
     computed: {
-        searchFromDate: {
-            get() {
-                return useSearchRangeStore().searchFromDate;
-            },
-            set(value) {
-              const store = useSearchRangeStore();
-              store.setSearchFromDate(value);
-              this.getFilteredResult(); // Trigger the filtering logic
-            }
+      searchFromDate: {
+        get() {
+          return useSearchRangeStore().searchFromDate;
         },
-        searchToDate: {
-            get() {
-                return useSearchRangeStore().searchToDate;
-            },
-            set(value) {
-              const store = useSearchRangeStore();
-              store.setSearchToDate(value);
-              this.getFilteredResult(); // Trigger the filtering logic
-            }
+        set(value) {
+          const store = useSearchRangeStore();
+          store.setSearchFromDate(value);
+          this.getFilteredResult(); // Trigger the filtering logic
+        }
+      },
+      searchToDate: {
+        get() {
+          return useSearchRangeStore().searchToDate;
         },
-      totalHoursWorkedPerClient() {
-       if (this.work) {
-         // Flatten the structure to get a single list of all workDetails
-         const flattenedWorkDetails = this.work.flatMap(workDay => workDay.workDetails);
- 
-         // Calculate totals
-         const totals = flattenedWorkDetails.reduce((acc, workDetail) => {
-           const clientName = workDetail.client.name;
-           if (!acc[clientName]) {
-             acc[clientName] = { clientName, totalHours: 0 };
-           }
-           acc[clientName].totalHours += workDetail.hours;
-           return acc;
-         }, {});
- 
-         // Convert the totals object into an array of objects
-         return Object.values(totals);
-       }
-       else{
+        set(value) {
+          const store = useSearchRangeStore();
+          store.setSearchToDate(value);
+          this.getFilteredResult(); // Trigger the filtering logic
+        }
+      },
+      totalHoursWorkedPerClientForSelectedDays() {
+        if (this.work) {
+          // Flatten the structure to get a single list of all workDetails
+          const flattenedWorkDetails = this.work.flatMap(workDay => workDay.workDetails);
+
+          const result = this.getTotalHoursPerClient(flattenedWorkDetails);
+          return result;
+
+          // // Calculate totals using reduce
+          // const totals = flattenedWorkDetails.reduce((acc, workDetail) => {
+          //   const clientName = workDetail.client.name;
+          //   if (!acc[clientName]) {
+          //     acc[clientName] = { clientName, totalHours: 0 };
+          //   }
+          //   acc[clientName].totalHours += workDetail.hours;
+          //   return acc;
+          // }, {});
+
+          // // Convert the totals object into an array of objects
+          // return Object.values(totals);
+        }
+        else {
           return 0;
-       }
-        },
+        }
+      },
+     
       totalHoursWorked() {
         if (this.work) {
           return this.work.reduce((acc, workDay) => acc + this.getTotalHours(workDay.workDetails), 0);
         }
-        else{
+        else {
           return 0;
         }
       },
       selectedIndex() {
         const selectedGridItemStore = useSelectedGridItemStore();
         return selectedGridItemStore.selectedGridItem; // Reactively link to the store's value
-        },
+      },
     },
     methods: {
       viewWorkDay(workDay) {
@@ -164,6 +176,17 @@
       },
       getTotalHours(workDetails) {
         return workDetails.reduce((acc, work) => acc + work.hours, 0);
+      },
+      getTotalHoursPerClient(workDetails) {
+        const totals = {};
+        workDetails.forEach(workDetail => {
+          const clientName = workDetail.client.name;
+          if (!totals[clientName]) {
+            totals[clientName] = 0;
+          }
+          totals[clientName] += workDetail.hours;
+        });
+        return Object.entries(totals).map(([clientName, totalHours]) => ({ clientName, totalHours }));
       },
       getFilteredResult()
       {
@@ -231,6 +254,16 @@ td, th {
   padding: 8px;
 }
 
+td ul {
+  padding-left: 0;
+  margin: 0;
+  list-style: none;
+}
+
+td ul li:last-child {
+  margin-bottom: 0;
+}
+
 tr:nth-child(even) {
   background-color: #ddd;
 }
@@ -264,10 +297,11 @@ button:hover {
 
 /* Total Hours Worked styling */
 .total-hours {
-  margin-top: 20px;
+  margin-top: 10px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-weight: bold;
+  background-color: #ddd;
 }
 </style>
