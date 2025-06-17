@@ -3,7 +3,6 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import '@fortawesome/fontawesome-free/js/all.js';
 import axiosPlugin from './plugins/axios'; // Import the axios plugin
 import MainLayout from './layouts/MainLayout.vue';
-import TitleHeader from './components/TitleHeader.vue';
 import { createPinia } from 'pinia';
 
 import { createApp } from 'vue'
@@ -29,6 +28,5 @@ app.component('BOverlay', BOverlay);
 app.component('BSpinner', BSpinner);
 
 app.component('MainLayout', MainLayout);
-app.component('TitleHeader', TitleHeader);
 
 app.mount('#app')

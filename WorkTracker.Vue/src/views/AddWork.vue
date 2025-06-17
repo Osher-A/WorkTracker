@@ -1,7 +1,6 @@
 <template>
-    <main-layout >
-        <title-header title="Add Work"></title-header>
-    <div class="work-tracker-form">
+    <main-layout width="100%">
+    <div class="add-work-form">
         <!-- Date Picker -->
         <div class="form-group">
             <label for="date">Date:</label>
@@ -158,17 +157,17 @@
 </script>
 
 <style scoped>
-    .work-tracker-form {
+    .add-work-form {
         width: 100%;
         min-width: 500px;
         padding: 20px;
-        background-color: #ffffff;
-        border: 1px solid #e0e0e0;
+        border: 1px solid black;
         border-radius: 10px;
+        background-color: white;
     }
 
     .form-group {
-        margin-bottom: 20px;
+        margin-bottom: 5%;
     }
 
     .submit-btn {
@@ -194,8 +193,8 @@
         margin-right: 0;
     }
 
-      .small {
-        background-color: rgba(13, 30, 31, 0.342);
+    .small {
+    background-color: rgba(13, 30, 31, 0.342);
     }
     /* Add styles for .is-invalid and .invalid-feedback if not already present */
     .is-invalid {

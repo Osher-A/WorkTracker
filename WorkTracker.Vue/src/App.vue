@@ -1,9 +1,9 @@
 <template>
     <header>
         <nav>
-            <RouterLink to="/" exact>Add Work</RouterLink>
-            <RouterLink to="/list">Work lists</RouterLink>
-            <RouterLink to="/clients">Clients</RouterLink>
+            <RouterLink to="/" exact class="router-link">Add Work</RouterLink>
+            <RouterLink to="/list" class="router-link">Work lists</RouterLink>
+            <RouterLink to="/clients" class="router-link">Clients</RouterLink>
         </nav>
     </header>
 
@@ -23,6 +23,7 @@
 <style>
    body {
     font-family:Arial, Helvetica, sans-serif;
+    background-color: rgb(241, 241, 240) !important;
    }
 </style>
 
@@ -37,7 +38,6 @@
         position: fixed; /* Fix header at the top */
         top: 0;
         left: 0;
-        background-color: white; /* Set background color */
         z-index: 1000; /* Ensure header is above other content */
     }
 
@@ -45,11 +45,37 @@
         display: flex;
         gap: 1rem;
         font-size: x-large;
+        justify-content: space-between;
+        width: 600px;
+        margin-top: 20px;
+        border-bottom: 2px solid #ccc; /* Tab underline */
     }
 
+   .router-link {
+        display: inline-block;
+        padding: 10px 30px;
+        border: 1px solid #ccc;
+        border-bottom: none;
+        background: #f9f9f9;
+        color: #333;
+        text-decoration: none;
+        border-radius: 8px 8px 0 0;
+        margin-right: 2px;
+        transition: background 0.2s;
+        position: relative;
+        top: 2px;
+   }
+
     .router-link-active {
+        background: #fff;
+        color: #1976d2;
         font-weight: bold;
-        color: blue;
+        border-bottom: 2px solid #fff;
+        z-index: 1;
+    }
+
+    .router-link:last-child {
+        margin-right: 0;
     }
 
     @media (min-width: 1024px) {

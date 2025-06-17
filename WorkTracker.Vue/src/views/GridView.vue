@@ -1,14 +1,13 @@
 <template>
   <b-overlay :show="isLoading" spinner>
     <main-layout width="100%">
-      <title-header title="Work Grid"></title-header>
       <div class="search-filters">
         <div>
           <label for="searchFromDate">From:</label>
           <input type="date" class="form-control" id="searchFromDate" v-model="searchFromDate"/>
         </div>
         <div>
-          <label for="searchToDate">To</label>
+          <label for="searchToDate">To:</label>
           <input type="date" class="form-control" id="searchToDate" v-model="searchToDate" />
         </div>
      </div>
@@ -232,6 +231,7 @@
     padding: 10px;
     border: black 1px solid;
     border-radius: 5px;
+    background-color: white;;
 }
 
 .button-container {
@@ -245,6 +245,7 @@ table {
   border-collapse: collapse;
   border: 1px solid black;
   min-width: 500px; 
+  background-color: white;
 }
 
 

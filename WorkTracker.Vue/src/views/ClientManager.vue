@@ -1,6 +1,5 @@
 <template>
   <main-layout width="100%" >
-    <title-header title="Client Manager"></title-header>
     <div class="client-manager">
       <table>
         <thead>
@@ -63,15 +62,18 @@
 
         async created() {
             // Fetch clients from the server
-            try {
-                const response = await this.$axios.get('client');
-                const clients = response.data;
-                this.clients = clients.map(client => ({ id: client.id, name: client.name, isEditing: false }));
-            } catch (e) {
-                console.error(e);
-            }
+            await this.fetchClients();
         },
         methods: {
+            async fetchClients() {
+                try {
+                    const response = await this.$axios.get('client');
+                    const clients = response.data;
+                    this.clients = clients.map(client => ({ id: client.id, name: client.name, isEditing: false }));
+                } catch (e) {
+                    console.error(e);
+                }
+            },
             showNewClientInput() {
                 this.isAddingNewClient = true;
             },
@@ -81,6 +83,8 @@
                         await this.$axios.post('client', { name: this.newClientName });
                         this.newClientName = '';
                         this.isAddingNewClient = false;
+                        // Refresh the client list
+                        await this.fetchClients();
                     }
                 } catch (e) {
                     console.error(e);
